@@ -1,0 +1,128 @@
+/* --- Стили для всей секции --- */
+.projects {
+    position: relative; /* Нужно для псевдо-элемента фона */
+    overflow: hidden;
+    padding: 100px 0; /* Увеличим отступы */
+}
+
+/* НОВОЕ: "Продолжение" фона из Hero-секции */
+.projects::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 100%;
+    /* background-image: radial-gradient(ellipse at top, hsla(var(--primary-hue, 210), 30%, 20%, 0.2) 0%, transparent 70%); */
+    z-index: -1;
+}
+
+/* --- Стили для сетки проектов --- */
+.projectsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Чуть увеличим мин. ширину */
+    gap: 40px;
+}
+
+/* --- "Стеклянные" карточки проектов --- */
+.projectCard {
+    position: relative; /* Нужно для подсветки */
+    overflow: hidden; /* Важно для скругленных углов и подсветки */
+    border-radius: 16px; /* Более выраженные скругления */
+    
+    /* Эффект матового стекла */
+    background: rgba(var(--card-bg-rgb), 0.5); /* Полупрозрачный фон */
+    backdrop-filter: blur(10px); /* Размытие фона */
+    border: 1px solid rgba(var(--border-rgb), 0.2); /* Полупрозрачная рамка */
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* НОВОЕ: Анимированная градиентная подсветка при наведении */
+.projectCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    background: linear-gradient(120deg, transparent, var(--primary-color), transparent) border-box;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) padding-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.projectCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.projectCard:hover::before {
+    opacity: 1;
+}
+
+
+/* --- Внутреннее содержимое карточки (остается без глобальных изменений) --- */
+/* ... твои стили для .projectImage, .projectInfo, .projectTitle и т.д. ... */
+/* Пример стилей, если у тебя их нет: */
+
+.projectImage {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(var(--border-rgb), 0.1);
+}
+
+.projectInfo {
+    padding: 25px;
+}
+
+.projectTitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.projectDescription {
+    margin-bottom: 20px;
+    min-height: 50px;
+    opacity: 0.8;
+}
+
+.projectTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.projectTags span {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    color: var(--primary-color);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.projectLinks a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-right: 20px;
+    transition: color 0.3s ease;
+    opacity: 0.7;
+}
+.projectLinks a:hover {
+    color: var(--primary-color);
+    opacity: 1;
+}
+.projectLinks i {
+    vertical-align: middle;
+}

@@ -1,0 +1,29 @@
+.contact {
+    text-align: center;
+}
+
+.contactText {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+.socialLinks {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Увеличим расстояние для лучшего вида */
+}
+
+.socialLinks a {
+    color: var(--text-color);
+    font-size: 2.2rem; /* Немного увеличим иконки */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.socialLinks a:hover {
+    color: var(--primary-color);
+    transform: translateY(-5px);
+}

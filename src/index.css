@@ -1,0 +1,133 @@
+/* --- ОСНОВНЫЕ СТИЛИ И ПЕРЕМЕННЫЕ --- */
+:root {
+    /* ... твои старые переменные светлой темы ... */
+    --bg-color: #f4f7f9;
+    --text-color: #2e3440;
+    --primary-hue: 210; /* HSL оттенок для синего */
+    
+    /* НОВОЕ: Определяем глобальный градиент для СВЕТЛОЙ темы */
+    /* Он будет очень мягким, едва заметным, чтобы не мешать читаемости */
+    --global-gradient: radial-gradient(
+        ellipse at 50% 100%, 
+        hsla(var(--primary-hue), 30%, 85%, 0.5), /* Светлый, полупрозрачный оттенок */
+        transparent 80%
+    );
+}
+
+html[data-theme="blue"] {
+    /* ... твои старые переменные темной темы ... */
+    --bg-color: #1a202c;
+    --text-color: #e5e9f0;
+    --primary-hue: 195; /* HSL оттенок для светло-голубого */
+    
+    /* НОВОЕ: Переопределяем градиент для ТЕМНОЙ темы (твой любимый) */
+    --global-gradient: radial-gradient(
+        ellipse at 50% 100%, 
+        hsla(var(--primary-hue), 30%, 15%, 0.4), /* Темный, глубокий оттенок */
+        transparent 70%
+    );
+}
+.global-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Помещаем фон позади всего контента */
+}
+
+/* НОВОЕ: Делаем фон секций прозрачным, чтобы видеть глобальный фон */
+section {
+  background: transparent;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Не забудь подключить шрифт в index.html */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+/* Общие стили для кнопок, ссылок и т.д. можно оставить здесь */
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color); /* Инвертированный цвет для контраста */
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-3px);
+}
+.global-background-canvas {
+  position: fixed; /* Прибиваем к viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* !!! САМОЕ ВАЖНОЕ: Убираем его за весь остальной контент */
+}
+
+/* Обертка для контента, чтобы управлять его позиционированием */
+.content-wrapper {
+  position: relative; /* Создаем новый контекст наложения */
+  z-index: 1; /* Убеждаемся, что контент выше фона */
+  background-color: transparent; 
+}
+
+/* --- Ключевой момент для прозрачности --- */
+/* 
+  Теперь, чтобы фон был виден, секции, где он должен просвечивать,
+  должны иметь прозрачный фон!
+*/
+
+/* Например, в стилях для Hero (Hero.css) */
+.hero-section {
+  background-color: transparent; /* Делаем Hero прозрачным, чтобы видеть 3D-сцену */
+  min-height: 100vh; /* Задаем высоту, чтобы было пространство для фона */
+  /* ... остальные стили для центрирования текста и т.д. */
+}
+
+/* 
+  А секции, которые должны быть непрозрачными (например, Projects, Contact, Footer),
+  просто сохраняют свой обычный background-color, который будет перекрывать 3D-сцену.
+*/
+.projects-section {
+  background-color: var(--background-color); /* Этот цвет перекроет 3D-фон */
+}
+
+.contact-section {
+  background-color: var(--background-color-secondary); /* И этот тоже */
+}

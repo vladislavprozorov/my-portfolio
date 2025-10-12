@@ -1,0 +1,188 @@
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative; 
+    overflow: hidden;
+    background: var(--bg-color); 
+    /* НОВОЕ: Добавляем тонкий градиент на сам фон для глубины */
+    background-image: radial-gradient(ellipse at bottom, hsla(var(--primary-hue, 210), 30%, 20%, 0.3) 0%, transparent 70%);
+}
+
+.heroLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+}
+
+.heroContent {
+    text-align: left;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Новая, чистая и контрастная типографика --- */
+.heroTitle {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-wrap: balance;
+    color: var(--text-color);
+}
+
+.heroTitle span {
+    color: var(--primary-color);
+}
+
+.heroSubtitleAnimated {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-bottom: 40px;
+    height: 30px;
+}
+
+.heroSubtitle {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    opacity: 0.7;
+    max-width: 500px;
+}
+
+/* --- Новые, стильные и минималистичные кнопки --- */
+.actionButtons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ctaButton {
+    /* Возвращаемся к нашему градиентному стилю, он будет отлично контрастировать */
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color));
+    border: none;
+    box-shadow: 0 4px 20px rgba(var(--primary-color-rgb, 94, 129, 172), 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ctaButton:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(var(--primary-color-rgb, 94, 129, 172), 0.5);
+}
+
+.socialLink {
+    color: var(--text-color);
+    font-size: 2.2rem;
+    opacity: 0.6;
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.socialLink:hover {
+    color: var(--primary-color);
+    transform: scale(1.15);
+    opacity: 1;
+}
+
+/* --- 3D Сцена --- */
+.heroScene {
+    width: 100%;
+    height: 600px;
+    cursor: grab;
+    position: relative;
+}
+.heroScene:active {
+    cursor: grabbing;
+}
+
+/* ... остальные стили (.scrollDown, .mouse, адаптивность) остаются без изменений ... */
+/* ... скопируй их из своей предыдущей рабочей версии ... */
+
+/* --- Правый визуальный блок --- */
+.heroVisual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Включаем 3D-перспективу для дочерних элементов */
+}
+
+.techCube {
+    width: 350px;
+    height: 350px;
+    position: relative;
+    transform-style: preserve-3d; /* Важно для 3D-позиционирования иконок */
+    
+    /* Эффект Glassmorphism */
+    background: rgba(var(--card-bg-rgb), 0.1); /* Полупрозрачный фон */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Для Safari */
+    border-radius: 30px;
+    border: 1px solid rgba(var(--border-rgb), 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.techIcon {
+    position: absolute;
+    font-size: 4rem; /* Размер иконок */
+    color: var(--text-color);
+    opacity: 0.8;
+    
+    /* Анимация плавного "парения" */
+    animation: floatAnimation 6s ease-in-out infinite alternate;
+}
+
+/* --- Анимация "парения" --- */
+@keyframes floatAnimation {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(0px) rotate(-5deg);
+        opacity: 0.7;
+    }
+}
+
+/* --- Расположение каждой иконки внутри куба --- */
+.iconReact {
+    top: 15%;
+    left: 40%;
+    animation-delay: 0s; /* Начинается сразу */
+    color: #61DAFB; /* Цвет React */
+}
+
+.iconNode {
+    top: 65%;
+    left: 60%;
+    animation-delay: -2s; /* Начинается с другой фазы анимации */
+    color: #8CC84B; /* Цвет Node.js */
+}
+
+.iconJs {
+    top: 30%;
+    left: 10%;
+    animation-delay: -4s;
+    color: #F7DF1E; /* Цвет JavaScript */
+}
+
+.iconPostgres {
+    top: 60%;
+    left: 15%;
+    animation-delay: -1s;
+    color: #336791; /* Цвет PostgreSQL */
+}
+
+.iconDocker {
+    top: 20%;
+    left: 70%;
+    animation-delay: -3s;
+    color: #2496ED; /* Цвет Docker */
+}

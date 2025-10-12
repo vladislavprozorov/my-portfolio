@@ -1,0 +1,148 @@
+/* --- Основные стили шапки --- */
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+    z-index: 100;
+    background-color: var(--header-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    /* Убрали 'transform' из transition */
+    transition: 
+        background-color 0.3s ease, 
+        border-color 0.3s ease, 
+        box-shadow 0.3s ease;
+}
+
+/* Стиль для шапки при скролле */
+.header.scrolled {
+    border-color: var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    z-index: 10;
+}
+
+/* --- Навигация --- */
+.navContainer {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navList {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.navList a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Анимация подчеркивания при наведении */
+.navList a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.navList a:hover {
+    color: var(--primary-color);
+}
+
+.navList a:hover::after {
+    width: 100%;
+}
+
+/* Стиль для активной ссылки */
+.navList a.active {
+    color: var(--primary-color);
+}
+.navList a.active::after {
+    width: 100%;
+}
+
+/* --- Остальные стили (без изменений) --- */
+.themeToggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+.themeToggle:hover {
+    transform: scale(1.2) rotate(15deg);
+    color: var(--primary-color);
+}
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+.burgerLine {
+    width: 2rem;
+    height: 0.2rem;
+    background: var(--text-color);
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+.burger.open .burgerLine:nth-child(1) { transform: rotate(45deg); }
+.burger.open .burgerLine:nth-child(2) { opacity: 0; transform: translateX(20px); }
+.burger.open .burgerLine:nth-child(3) { transform: rotate(-45deg); }
+@media (max-width: 768px) {
+    .navContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--bg-color);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    }
+    .navContainer.open { transform: translateY(0); opacity: 1; }
+    .navList { flex-direction: column; text-align: center; gap: 40px; }
+    .navList a { font-size: 1.5rem; }
+    .burger { display: flex; }
+}
