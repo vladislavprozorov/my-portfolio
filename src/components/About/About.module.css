@@ -127,15 +127,21 @@
   overflow: hidden; 
 }
 
-.aboutContent {
-  display: flex;
-  align-items: center; 
-  gap: 60px;
-}
+.aboutContent { display: block; }
 
 .imageWrapper {
   flex-shrink: 0;
 }
+
+/* Минималистичная двухколоночная сетка */
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.photoCol { justify-self: start; }
+.textCol { justify-self: stretch; }
 
 .glowWrapper {
   position: relative;
@@ -181,17 +187,145 @@
   flex: 1;
 }
 
+/* Чат‑поток (messenger-like) */
+.chatThread {
+  display: grid;
+  gap: 14px;
+}
+.msg {
+  max-width: 760px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg-color);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+.left { justify-self: start; }
+.right { justify-self: end; }
+.skillsBubble { padding-top: 10px; }
+
 .bio {
   font-size: 1.15rem;
   line-height: 1.7;
-  margin-bottom: 30px;
+  margin-bottom: 14px;
 }
 
 .skillsTitle {
   font-size: 1.4rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: var(--primary-color);
 }
+
+/* Навыки — в строку (переносятся при нехватке места) */
+.skillsBar { margin-top: 8px; }
+.skillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.skillPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid rgba(var(--border-rgb), 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* --- Новые элементы --- */
+.availabilityRow {
+  margin: 8px 0 16px; 
+}
+.availabilityBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e; /* green-500 */
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+.checkIcon { font-size: 1rem; }
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 14px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(var(--primary-color-rgb), 0.12);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.chip:hover { 
+  background: rgba(var(--primary-color-rgb), 0.2);
+  border-color: rgba(var(--primary-color-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+.valueProps {
+  margin: 8px 0 18px;
+  padding-left: 18px;
+  opacity: 0.9;
+}
+.valueProps li {
+  margin: 6px 0;
+}
+
+.skillMeter {
+  width: 100%;
+  height: 6px;
+  background: rgba(var(--border-rgb), 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.skillMeterFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-hover-color), var(--primary-color));
+  border-radius: 999px;
+  transition: width 1s ease;
+}
+
+.timeline { display: grid; gap: 10px; }
+.timelineItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.timelineDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.7);
+  margin-top: 6px;
+}
+.timelineTitle { font-weight: 600; }
+.timelineMeta { opacity: 0.7; font-size: 0.9rem; }
+
+/* Полноширинный столбец с опытом */
+.timelineFull { margin: 18px 0 24px; }
 
 .skillsGrid {
   display: grid;
@@ -256,23 +390,29 @@
 
 /* --- МОБИЛЬНАЯ ОПТИМИЗАЦИЯ --- */
 
+/* Reveal animation (native) */
+.reveal { opacity: 0; transform: translateY(var(--reveal-distance)); transition: opacity var(--reveal-duration) ease, transform var(--reveal-duration) ease; }
+.revealVisible { opacity: 1; transform: translateY(0); }
+
 /* 1. Брейкпоинт для планшетов и большинства смартфонов */
 @media (max-width: 900px) {
-  .aboutContent {
-    /* Перестраиваем layout в вертикальный */
-    flex-direction: column;
-    /* Уменьшаем разрыв между фото и текстом, чтобы секция не была слишком растянутой */
-    gap: 40px; 
-    /* Центрируем текст, так как он теперь под фото */
-    text-align: center;
-  }
-  
+  .aboutGrid { grid-template-columns: 1fr; gap: 18px; }
+  .photoCol { justify-self: center; }
+  .textCol { text-align: center; }
+  .availabilityRow { display: flex; justify-content: center; }
+  .skillsRow { justify-content: center; }
+  .statsRow { justify-content: center; }
+  .timelineFull { margin: 20px 0 28px; }
+  .ctaRow { justify-content: center; }
+
   .glowWrapper {
     /* Пропорционально уменьшаем фото, чтобы оно не доминировало на экране */
     width: 240px;
     height: 240px;
   }
 }
+
+/* Убираем горизонтальную прокрутку: навыки на мобилках переносятся по строкам (по умолчанию) */
 
 /* 2. Брейкпоинт для маленьких смартфонов */
 @media (max-width: 480px) {
@@ -305,6 +445,20 @@
     /* Уменьшаем отступ между карточками */
     gap: 10px;
   }
+
+  /* Стекуем CTA-кнопки и увеличиваем тач-цели */
+  .ctaRow { flex-direction: column; align-items: stretch; gap: 10px; }
+  :global(.cta-button),
+  .ctaGhost {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 18px;
+    min-height: 44px; /* Apple HIG / Material min touch target */
+  }
+
+  /* Чипсы и пилюли навыков — чуть крупнее для удобства */
+  .chip,
+  .skillPill { padding: 10px 14px; }
 }
 
 /* Призрачная кнопка для вторичного CTA */
@@ -323,6 +477,8 @@
   background: rgba(var(--primary-color-rgb), 0.08);
   border-color: rgba(var(--primary-color-rgb), 0.6);
 }
+.ctaGhost:hover svg { transform: translateX(2px); }
+.ctaGhost svg { transition: transform 0.2s ease; }
 
 .ctaRow {
   margin-top: 22px;
@@ -338,4 +494,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .profileImage { animation: none; }
+}
+
+/* Снижаем нагрузку на мобильных: отключаем «glow» анимацию для маленьких экранов */
+@media (max-width: 480px) {
+  .glowWrapper::before { animation: none; filter: blur(16px); opacity: 0.85; }
 }

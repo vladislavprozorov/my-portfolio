@@ -3,8 +3,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { useInView } from 'react-intersection-observer';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 // --- КОД ПАСХАЛКИ ---
 import Confetti from 'react-confetti';
@@ -58,9 +56,7 @@ function App() {
     console.log('%cПссс... На этом сайте есть пасхалка)', styles);
   }, []);
 
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true, offset: 50 });
-  }, []);
+  // AOS больше не используется: нативные reveal-анимации
 
   useEffect(() => {
     if (hackerMode) {

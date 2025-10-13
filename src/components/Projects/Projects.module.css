@@ -12,6 +12,10 @@
     gap: 40px;
 }
 
+    /* Reveal animation (native) */
+    .reveal { opacity: 0; transform: translateY(var(--reveal-distance)); transition: opacity var(--reveal-duration) ease, transform var(--reveal-duration) ease; }
+    .revealVisible { opacity: 1; transform: translateY(0); }
+
 /* --- Карточка --- */
 .projectCard {
     position: relative;

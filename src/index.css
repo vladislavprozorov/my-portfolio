@@ -19,6 +19,11 @@
         hsla(var(--primary-hue), 30%, 85%, 0.5), /* Светлый оттенок */
         transparent 80%
     );
+
+    /* Единые переменные для анимаций */
+    --reveal-duration: .45s;
+    --reveal-stagger-step: 90ms;
+    --reveal-distance: 10px;
 }
 
 
@@ -43,6 +48,9 @@ html[data-theme="blue"] {
     --header-bg: rgba(26, 32, 44, 0.8);
     --card-bg-rgb: 45, 55, 72;
     --border-rgb: 229, 233, 240;
+
+    /* Можно при желании ускорить/замедлить анимации в теме */
+    --reveal-duration: .4s;
 }
 .global-background {
   position: fixed;

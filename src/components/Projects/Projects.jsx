@@ -1,4 +1,5 @@
 import ProjectCard from '../ProjectCard';
+import { useReveal } from '../../hooks/useReveal';
 import styles from './Projects.module.css';
 
 // В реальном приложении эти данные могут приходить с API или из отдельного файла
@@ -22,10 +23,11 @@ const projectsData = [
 ];
 
 const Projects = () => {
+    const heading = useReveal();
     return (
         <section id="projects" className={styles.projects}>
             <div className="container">
-                <h2 className="section-title" data-aos="fade-up">Мои работы</h2>
+                <h2 ref={heading.ref} className={`section-title ${styles.reveal} ${heading.visible ? styles.revealVisible : ''}`}>Мои работы</h2>
                 <div className={styles.projectsGrid}>
                     {projectsData.map((project, index) => (
                         <ProjectCard 

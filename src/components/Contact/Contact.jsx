@@ -1,15 +1,17 @@
 // src/components/Contact/Contact.jsx (Мобильно-оптимизированная версия)
 
 import React from 'react';
+import { useReveal } from '../../hooks/useReveal';
 import styles from './Contact.module.css';
 import { FaGithub, FaTelegram, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 const Contact = () => {
     const email = "skayterder@vk.com"; // Вынесем email в переменную для удобства
     
+    const reveal = useReveal();
     return (
         <section id="contact" className={styles.contact}>
-            <div className="container" data-aos="fade-up">
+            <div ref={reveal.ref} className={`container ${styles.reveal} ${reveal.visible ? styles.revealVisible : ''}`}>
                 <h2 className="section-title">Свяжитесь со мной</h2>
                 <p className={styles.contactText}>
                     Я всегда открыт для новых проектов и интересных предложений.

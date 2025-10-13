@@ -1,5 +1,5 @@
 // Hero.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './Hero.module.css';
 import { TypeAnimation } from 'react-type-animation';
 import { useParallax } from 'react-scroll-parallax';
@@ -14,6 +14,11 @@ const ParallaxIcon = ({ children, className, speed }) => {
 const Hero = ({ forwardedRef }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const base = import.meta.env.BASE_URL;
+  const cvpRef = useRef(null);
+  const [cvpVisible, setCvpVisible] = useState(false);
+  const kpiRef = useRef(null);
+  const [kpiVisible, setKpiVisible] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -36,10 +41,33 @@ const Hero = ({ forwardedRef }) => {
   const textParallax = useParallax({ speed: isMobile || reduceMotion ? 0 : -12 });
   const haloParallax = useParallax({ speed: isMobile || reduceMotion ? 0 : -8 });
 
+  // Нативная анимация появления для CVP и KPI (без AOS)
+  useEffect(() => {
+    if (reduceMotion) {
+      setCvpVisible(true);
+      setKpiVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (entry.target === cvpRef.current) setCvpVisible(true);
+            if (entry.target === kpiRef.current) setKpiVisible(true);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    );
+    if (cvpRef.current) observer.observe(cvpRef.current);
+    if (kpiRef.current) observer.observe(kpiRef.current);
+    return () => observer.disconnect();
+  }, [reduceMotion]);
+
   return (
     <section ref={forwardedRef} className={styles.hero} id="hero" aria-label="Hero — краткое представление">
       <div className={`container ${styles.heroLayout}`}>
-        <div ref={textParallax.ref} className={styles.heroContent} data-aos="fade-right">
+  <div ref={textParallax.ref} className={styles.heroContent}>
           {/* Halo parallax */}
           <div ref={haloParallax.ref} className={styles.halo}></div>
 
@@ -70,12 +98,26 @@ const Hero = ({ forwardedRef }) => {
             )}
 
           <p className={styles.heroSubtitle}>
-           Оптимизация загрузки, аккуратная архитектура и вкусный UX.
+            Оптимизация загрузки, аккуратная архитектура и вкусный UX.
           </p>
+
+          {/* CVP: краткое ценностное предложение (native reveal) */}
+          <div ref={cvpRef} className={`${styles.cvp} ${styles.reveal} ${cvpVisible ? styles.revealVisible : ''}`}>
+            <p>
+              Снижаю LCP до <span className={styles.kpiStrong}>&lt; 2s</span>. Ускоряю вывод фич в <span className={styles.kpiStrong}>2–3 раза</span>. <span className={styles.kpiStrong}>100% on‑time</span>.
+            </p>
+          </div>
+
+          {/* KPI чипсы (native reveal + stagger) */}
+          <div ref={kpiRef} className={styles.kpiRow} role="list" aria-label="Ключевые KPI">
+            <span className={`${styles.kpiChip} ${styles.reveal} ${kpiVisible ? styles.revealVisible : ''}`} style={{ transitionDelay: kpiVisible ? '0ms' : '0ms' }} role="listitem">LCP &lt; 2s</span>
+            <span className={`${styles.kpiChip} ${styles.reveal} ${kpiVisible ? styles.revealVisible : ''}`} style={{ transitionDelay: kpiVisible ? '90ms' : '0ms' }} role="listitem">Фичи ×2–3 быстрее</span>
+            <span className={`${styles.kpiChip} ${styles.reveal} ${kpiVisible ? styles.revealVisible : ''}`} style={{ transitionDelay: kpiVisible ? '180ms' : '0ms' }} role="listitem">100% on‑time delivery</span>
+          </div>
 
           <div className={styles.actionButtons}>
             <a
-              href="/my-portfolio/CV.pdf"
+              href={`${base}CV.pdf`}
               className={`cta-button ${styles.ctaButton}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -101,7 +143,7 @@ const Hero = ({ forwardedRef }) => {
           </div>
         </div>
 
-        <div className={styles.heroVisual} data-aos="fade-left" data-aos-delay="200" aria-hidden={isMobile}>
+  <div className={styles.heroVisual} aria-hidden={isMobile}>
           <div className={styles.techCube} aria-hidden={isMobile}>
             <ParallaxIcon speed={15} className={`${styles.techIcon} ${styles.iconReact}`} isMobile={isMobile}><FaReact /></ParallaxIcon>
             <ParallaxIcon speed={5} className={`${styles.techIcon} ${styles.iconNode}`} isMobile={isMobile}><FaNodeJs /></ParallaxIcon>

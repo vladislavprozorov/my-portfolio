@@ -1,6 +1,7 @@
 // src/components/ProjectCard.jsx (Мобильно-оптимизированная версия)
 
 import { useState, useEffect } from 'react';
+import { useReveal } from '../hooks/useReveal';
 import styles from './Projects/Projects.module.css';
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
 
@@ -19,11 +20,13 @@ const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, de
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    const reveal = useReveal();
+    const styleDelay = isMobile ? undefined : { transitionDelay: `${delay || 0}ms` };
     return (
         <div 
-            className={styles.projectCard} 
-            data-aos="fade-up" 
-            data-aos-delay={isMobile ? 0 : delay} // Убираем задержку на мобилках
+            ref={reveal.ref}
+            className={`${styles.projectCard} ${styles.reveal} ${reveal.visible ? styles.revealVisible : ''}`} 
+            style={styleDelay}
             onMouseEnter={() => !isMobile && setIsHovered(true)}
             onMouseLeave={() => !isMobile && setIsHovered(false)}
         >
