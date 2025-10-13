@@ -49,7 +49,7 @@ const Hero = ({ forwardedRef }) => {
             <span>Software &amp; Engineer</span>
           </h1>
 
-          <p className={styles.heroUSP}>Реализую идеи в стабильный и масштабируемый код</p>
+        
 
           {(!reduceMotion) && (
             <TypeAnimation

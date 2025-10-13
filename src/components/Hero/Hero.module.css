@@ -5,14 +5,13 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding-bottom: 80px;
+    padding: 40px 0 80px;
     box-sizing: border-box;
-    padding: 40px 0 80px; 
 }
 
 .heroLayout {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); /* Даем тексту чуть больше места */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     align-items: center;
     gap: 60px;
     width: 100%;
@@ -24,6 +23,8 @@
     z-index: 3;
     max-width: 720px;
     text-align: left;
+    padding: 20px 0;
+    line-height: 1.5;
 }
 
 /* Halo под текстом */
@@ -43,19 +44,19 @@
 }
 
 @keyframes haloPulse {
-    0%,100%{opacity:1;transform:scale(1);}
-    50%{opacity:0.85;transform:scale(1.02);}
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.02); }
 }
 
 /* Заголовок */
 .heroTitle {
-    font-size: clamp(1.6rem,4.2vw,2.4rem);
+    font-size: clamp(1.6rem, 4.2vw, 2.4rem);
     font-weight: 700;
     line-height: 1.03;
     margin-bottom: 10px;
     color: var(--text-color);
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.38),0 10px 28px rgba(0,0,0,0.48);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.38), 0 10px 28px rgba(0,0,0,0.48);
 }
 
 .heroTitle span {
@@ -66,32 +67,25 @@
     margin-left: 6px;
 }
 
-.heroUSP {
-    font-weight: 600;
-    margin: 6px 0 12px;
+/* Подзаголовок */
+.heroSubtitle {
+    font-size: clamp(0.82rem, 1.8vw, 1rem);
+    margin-bottom: 20px;
     color: var(--text-color);
-    line-height: 1.28;
-    font-size: clamp(0.95rem,2.1vw,1.02rem);
-    text-shadow: 0 6px 18px rgba(0,0,0,0.28);
+    line-height: 1.5;
+    opacity: 0.95;
 }
 
 .heroSubtitleAnimated {
     display: block;
-    font-size: clamp(0.85rem,1.9vw,0.98rem);
+    font-size: clamp(0.85rem, 1.9vw, 1rem);
     font-weight: 500;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
     color: var(--text-color);
     opacity: 0.85;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.3); /* лёгкая тень для читаемости на тёмной теме */
+    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
     min-height: 26px;
-}
-
-.heroSubtitle {
-    font-size: clamp(0.82rem,1.8vw,0.95rem);
-    margin-bottom: 12px;
-    color: var(--text-color);
-    line-height: 1.4;
-    opacity: 0.95;
+    line-height: 1.3;
 }
 
 /* Кнопки */
@@ -103,224 +97,175 @@
 }
 
 .ctaButton {
-    background: linear-gradient(45deg,var(--primary-color),var(--primary-hover-color));
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color));
     border: none;
     padding: 12px 20px;
     border-radius: 10px;
     color: var(--bg-color);
     font-weight: 700;
-    transition: transform .25s,box-shadow .25s;
+    transition: transform .25s, box-shadow .25s;
     position: relative;
-    z-index:3;
+    z-index: 3;
 }
+
 .ctaButton:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(var(--primary-color-rgb,94,129,172),0.45);
+    box-shadow: 0 8px 30px rgba(var(--primary-color-rgb,94,129,172), 0.45);
 }
 
 .ctaButtonOutline {
-    display:inline-block;
-    padding:10px 18px;
-    border-radius:8px;
-    border:2px solid rgba(var(--primary-color-rgb,94,129,172),0.12);
-    font-weight:700;
-    color:var(--text-color);
-    background:transparent;
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 2px solid rgba(var(--primary-color-rgb,94,129,172), 0.12);
+    font-weight: 700;
+    color: var(--text-color);
+    background: transparent;
     transition: transform .22s, box-shadow .22s;
 }
+
 .ctaButtonOutline:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
 
 .socialLinks {
-    display:flex;
-    gap:15px;
+    display: flex;
+    gap: 15px;
 }
+
 .socialLink {
     color: var(--text-color);
-    font-size:1.6rem;
-    opacity:0.9;
+    font-size: 1.6rem;
+    opacity: 0.9;
     transition: transform .18s, color .18s;
 }
-.socialLink:hover { color: var(--primary-color); transform: scale(1.08); opacity:1; }
+
+.socialLink:hover {
+    color: var(--primary-color);
+    transform: scale(1.08);
+    opacity: 1;
+}
 
 /* Визуальный блок */
-.heroVisual { position: relative; display:flex; justify-content:center; align-items:center; perspective:1000px; z-index:3; }
-.techCube { width:min(350px,90vw); height:350px; position:relative; transform-style:preserve-3d; }
+.heroVisual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    z-index: 3;
+}
+
+.techCube {
+    width: min(350px, 90vw);
+    height: 350px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
 .techIcon {
-    position:absolute;
-    font-size:clamp(2.5rem,8vw,4rem);
-    opacity:0.9;
+    position: absolute;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    opacity: 0.9;
     animation: floatAnimation 6s ease-in-out infinite alternate;
 }
 
-@keyframes floatAnimation{
-    0%{transform:translateY(0) rotate(0deg);opacity:0.75;}
-    50%{transform:translateY(-20px) rotate(5deg);opacity:0.95;}
-    100%{transform:translateY(0) rotate(-5deg);opacity:0.75;}
+@keyframes floatAnimation {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.75; }
+    50% { transform: translateY(-20px) rotate(5deg); opacity: 0.95; }
+    100% { transform: translateY(0) rotate(-5deg); opacity: 0.75; }
 }
 
-.iconReact{top:15%;left:40%;animation-delay:0s;color:#61DAFB;}
-.iconNode{top:65%;left:60%;animation-delay:-2s;color:#8CC84B;}
-.iconJs{top:30%;left:10%;animation-delay:-4s;color:#F7DF1E;}
-.iconPostgres{top:60%;left:15%;animation-delay:-1s;color:#336791;}
-.iconDocker{top:20%;left:70%;animation-delay:-3s;color:#2496ED;}
+.iconReact { top: 15%; left: 40%; animation-delay: 0s; color: #61DAFB; }
+.iconNode { top: 65%; left: 60%; animation-delay: -2s; color: #8CC84B; }
+.iconJs { top: 30%; left: 10%; animation-delay: -4s; color: #F7DF1E; }
+.iconPostgres { top: 60%; left: 15%; animation-delay: -1s; color: #336791; }
+.iconDocker { top: 20%; left: 70%; animation-delay: -3s; color: #2496ED; }
 
 /* Scroll indicator */
-.scrollDown{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);opacity:.75;transition:opacity .3s;z-index:4;}
-.scrollDown:hover{opacity:1;}
-.mouse{width:26px;height:40px;border:2px solid var(--text-color);border-radius:20px;position:relative;}
-.mouse span{display:block;width:4px;height:8px;background:var(--text-color);border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:scroll 2s infinite;}
-@keyframes scroll{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(10px);}}
-
-/* Адаптация */
-@media screen and (max-width:768px){
-    .heroLayout{grid-template-columns:1fr;gap:20px;text-align:center;}
-    .heroContent{text-align:center;order:2;}
-    .heroVisual{order:1;margin-bottom:20px;}
-    .techCube{width:250px;height:250px;}
-     .techIcon{
-        animation: floatAnimation 6s ease-in-out infinite alternate;
-        font-size:3rem;
-    }
-    .actionButtons{flex-direction:column;gap:12px;width:100%;}
-    .ctaButton{width:100%;text-align:center;}
-    .socialLinks{justify-content:center;width:100%;}
-    .heroContent::before{left:-1.6rem;top:-0.8rem;width:calc(85% + 1rem);height:calc(100% + 1.6rem);filter:blur(12px);animation:none;}
-}
-@keyframes floatAnimationMobile {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
-    25% { transform: translateY(-8px) rotate(1deg); }
-    50% { transform: translateY(-16px) rotate(2deg); opacity: 0.95; }
-    75% { transform: translateY(-8px) rotate(1deg); }
-    100% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
+.scrollDown {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: .75;
+    transition: opacity .3s;
+    z-index: 4;
 }
 
-@media screen and (max-width:480px){
-    .hero{padding:20px 0;min-height:100svh;}
-    .heroTitle{font-size:1.45rem;}
-    .heroUSP{font-size:0.95rem;}
-    .heroSubtitleAnimated{font-size:1rem;margin-bottom:10px;}
-    .techCube{width:200px;height:200px;}
-    .techIcon{font-size:2.5rem;opacity:.95;}
-    .heroContent::before{display:none;}
-}
-@media (prefers-reduced-motion: reduce){
-    .techIcon{animation:none !important;}
-    .heroSubtitleAnimated{display:none;}
-}
-:root[data-theme="light"] .heroTitle span {
-  /* Освещаем основной синий, увеличивая яркость */
-  color: hsl(var(--primary-hue), 60%, 55%);
-}
-@media screen and (max-width: 768px) {
-  .ctaButtonOutline {
-    width: 100%;
-    text-align: center;
-  }
-}
-html[data-theme="blue"] .heroSubtitleAnimated {
-  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-  color: var(--text-color); /* светлый текст на тёмной теме */
-}
+.scrollDown:hover { opacity: 1; }
 
-:root[data-theme="light"] .heroSubtitleAnimated {
-  text-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  color: var(--text-color); /* тёмный текст на светлой теме */
-}
-.heroContent {
+.mouse {
+    width: 26px;
+    height: 40px;
+    border: 2px solid var(--text-color);
+    border-radius: 20px;
     position: relative;
-    z-index: 3;
-    max-width: 720px;
-    text-align: left;
-    padding: 1rem 0;          /* добавлен отступ сверху/снизу */
-    line-height: 1.5;          /* увеличен межстрочный интервал для воздуха */
 }
 
-.heroUSP {
-    font-weight: 600;
-    margin: 12px 0 20px;       /* увеличенные отступы сверху/снизу */
-    color: var(--text-color);
-    line-height: 1.45;         /* более просторный текст */
-    font-size: clamp(0.95rem,2.1vw,1.1rem);
-    text-shadow: 0 6px 18px rgba(0,0,0,0.28);
-}
-
-.heroSubtitleAnimated {
+.mouse span {
     display: block;
-    font-size: clamp(0.85rem,1.9vw,1rem);
-    font-weight: 500;
-    margin-bottom: 18px;       /* увеличенный margin для «воздуха» */
-    color: var(--text-color);
-    opacity: 0.85;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    min-height: 26px;
+    width: 4px;
+    height: 8px;
+    background: var(--text-color);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroll 2s infinite;
 }
 
-.heroSubtitle {
-    font-size: clamp(0.82rem,1.8vw,1rem);
-    margin-bottom: 20px;        /* больше пространства перед кнопками */
-    color: var(--text-color);
-    line-height: 1.5;
-    opacity: 0.95;
+@keyframes scroll {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
 }
 
-/* Адаптивные отступы и выравнивание на мобильных */
-@media screen and (max-width:768px){
-    .heroLayout { grid-template-columns:1fr; gap:30px; text-align:center; }
-    .heroContent { text-align:center; order:2; padding:0 1rem; }
-    .heroVisual { order:1; margin-bottom:20px; }
-    .actionButtons { flex-direction: column; gap:16px; width:100%; }
-    .ctaButton, .ctaButtonOutline { width:100%; text-align:center; }
-}
-@media screen and (max-width:480px){
-    .hero { padding:40px 10px; min-height:100svh; }
-    .heroTitle { font-size:1.5rem; line-height:1.3; }
-    .heroUSP { font-size:1rem; margin-bottom:18px; }
-    .heroSubtitleAnimated { font-size:0.95rem; margin-bottom:16px; }
-    .heroSubtitle { font-size:0.95rem; margin-bottom:18px; }
-}
-@media screen and (max-width:768px){
-    .heroTitle {
-        font-size: 1.6rem;
-        line-height: 1.2;
-        margin-bottom: 8px;
-    }
-    .heroTitle span {
-        font-size: 0.9em;
-        margin-left: 4px;
-    }
-    .heroUSP {
-        font-size: 0.85rem;
-        line-height: 1.3;
-        margin: 4px 0 8px;
-    }
-    .heroSubtitleAnimated {
-        font-size: 0.85rem;
-        line-height: 1.25;
-        min-height: 24px;
-    }
-    .heroSubtitle {
-        font-size: 0.82rem;
-        line-height: 1.3;
-        margin-bottom: 8px;
-    }
-}
-.heroContent {
-    padding: 20px 0;
-}
-
-
-
+/* Темная тема для куба */
 :global(html[data-theme="blue"]) .techCube {
     border-color: rgba(var(--primary-color-rgb), 0.3);
     background-image: radial-gradient(circle at center, rgba(var(--card-bg-rgb), 0.4) 0%, transparent 75%);
 }
-@media screen and (max-width:768px){
-    .iconReact{ animation-delay:0s; }
-    .iconNode{ animation-delay:-2s; }
-    .iconJs{ animation-delay:-4s; }
-    .iconPostgres{ animation-delay:-1s; }
-    .iconDocker{ animation-delay:-3s; }
+
+/* Адаптив */
+@media screen and (max-width: 768px) {
+    .heroLayout { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+    .heroContent { text-align: center; order: 2; padding: 0 1rem; }
+    .heroVisual { order: 1; margin-bottom: 20px; }
+    .techCube { width: 250px; height: 250px; }
+    .techIcon { font-size: 3rem; animation: floatAnimation 6s ease-in-out infinite alternate; }
+    .actionButtons { flex-direction: column; gap: 16px; width: 100%; }
+    .ctaButton, .ctaButtonOutline { width: 100%; text-align: center; }
+    .socialLinks { justify-content: center; width: 100%; }
+    .heroTitle { font-size: 1.6rem; line-height: 1.2; margin-bottom: 8px; }
+    .heroTitle span { font-size: 0.9em; margin-left: 4px; }
+    .heroSubtitle { font-size: 0.82rem; line-height: 1.3; margin-bottom: 8px; }
+    .heroSubtitleAnimated { font-size: 0.85rem; line-height: 1.25; min-height: 24px; margin-bottom: 16px; }
+    .iconReact { animation-delay: 0s; }
+    .iconNode { animation-delay: -2s; }
+    .iconJs { animation-delay: -4s; }
+    .iconPostgres { animation-delay: -1s; }
+    .iconDocker { animation-delay: -3s; }
+    .ctaButtonOutline { width: 100%; text-align: center; }
+}
+
+@media screen and (max-width: 480px) {
+    .hero { padding: 40px 10px; min-height: 100svh; }
+    .heroTitle { font-size: 1.5rem; line-height: 1.3; }
+    .heroSubtitle { font-size: 0.95rem; margin-bottom: 18px; }
+    .heroSubtitleAnimated { font-size: 0.95rem; margin-bottom: 16px; }
+    .techCube { width: 200px; height: 200px; }
+    .techIcon { font-size: 2.5rem; opacity: .95; }
+    .heroContent::before { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .techIcon { animation: none !important; }
+    .heroSubtitleAnimated { display: none; }
+}
+
+/* Светлая тема */
+:root[data-theme="light"] .heroTitle span {
+    color: hsl(var(--primary-hue), 60%, 55%);
 }
