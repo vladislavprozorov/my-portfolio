@@ -16,6 +16,7 @@ import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Footer from './components/Footer/Footer';
 import CustomCursor from './CustomCursor/CustomCursor';
+import BackToTop from './components/BackToTop/BackToTop';
 
 // Ленивая загрузка
 const About = lazy(() => import('./components/About/About'));
@@ -117,6 +118,7 @@ function App() {
           onHintClick={toggleHackerMode} 
           isHackerModeActive={hackerMode} 
         />
+        <BackToTop />
       </div>
     </ParallaxProvider>
   );
