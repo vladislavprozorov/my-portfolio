@@ -1,23 +1,30 @@
-// src/App.jsx (Новая архитектура)
-import { useState, useEffect } from 'react';
-import { ParallaxProvider } from 'react-scroll-parallax'; 
+// src/App.jsx (Супер-оптимизированная версия)
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { ParallaxProvider } from 'react-scroll-parallax';
+import { useInView } from 'react-intersection-observer'; // <-- ИМПОРТИРУЕМ ХУК
+
+// Компоненты, нужные сразу
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
-import Projects from './components/Projects/Projects';
-import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 
-// НОВОЕ: Импортируем фон и 3D-сцену прямо сюда
 
-import Scene3D from './components/Scene3D';
+// НОВОЕ: Ленивая загрузка "тяжелых" компонентов
+const Projects = lazy(() => import('./components/Projects/Projects'));
+const Contact = lazy(() => import('./components/Contact/Contact'));
+const Scene3D = lazy(() => import('./components/Scene3D')); // 3D-сцену тоже делаем ленивой!
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-
 function App() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+
+  // НОВОЕ: Хук для отслеживания видимости Hero
+  // `threshold: 0.1` означает, что событие сработает, когда хотя бы 10% Hero будет видно
+  const { ref: heroRef, inView: isHeroVisible } = useInView({
+    threshold: 0.1,
+    triggerOnce: false, // Важно! Чтобы сцена снова включалась при возврате
   });
 
   useEffect(() => {
@@ -34,25 +41,27 @@ function App() {
   };
 
   return (
-    <>
     <ParallaxProvider>
-      {/* НОВОЕ: Глобальный фон рендерится один раз для всей страницы */}
-      <div className="global-background">
-        <Scene3D />
-        {/* Мы можем поместить 3D-сцену сюда, если хотим, чтобы она была на фоне всех секций,
-            но для твоего дизайна лучше оставить ее в Hero, просто сделав фон Hero прозрачным.
-            Оставим пока только частицы. */}
+      {/* НОВОЕ: Контейнер для фона теперь не нужен, мы управляем рендером напрямую */}
+      {/* <div className="global-background"> ... </div> */}
+
+      <div className="content-wrapper">
+        <Header theme={theme} toggleTheme={toggleTheme} />
+        <main>
+          {/* НОВОЕ: Передаем ref в Hero, чтобы отслеживать его появление */}
+          <Hero forwardedRef={heroRef} />
+
+          {/* НОВОЕ: Оборачиваем ленивые компоненты в Suspense */}
+          <Suspense fallback={""}>
+            <Projects />
+            <Contact />
+          </Suspense>
+        </main>
+        <Footer />
       </div>
 
-      <Header theme={theme} toggleTheme={toggleTheme} />
-      <main>
-        <Hero />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-      </ParallaxProvider>
-    </>
+
+    </ParallaxProvider>
   );
 }
 

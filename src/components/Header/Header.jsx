@@ -3,12 +3,11 @@ import styles from './Header.module.css';
 import { BsMoonStarsFill, BsSunFill } from 'react-icons/bs';
 
 const Header = ({ theme, toggleTheme }) => {
-    const [isMenuOpen, setIsMenuОpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    // Это состояние хранит ID текущей видимой секции
     const [activeSection, setActiveSection] = useState('');
 
-    // Упрощенный эффект для отслеживания скролла.
-    // Теперь он только проверяет, прокручена ли страница, для добавления тени.
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
@@ -18,28 +17,32 @@ const Header = ({ theme, toggleTheme }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
     
-    // Эффект для подсветки активной секции (остается без изменений)
+    // Эффект для подсветки активной секции в меню
     useEffect(() => {
         const sections = document.querySelectorAll('section[id]');
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
+                    // Когда секция попадает в область видимости...
                     if (entry.isIntersecting) {
+                        // ...обновляем состояние, записывая ее ID
                         setActiveSection(entry.target.id);
                     }
                 });
             },
+            // Настраиваем "зону срабатывания": секция активна, когда она в средней части экрана
             { rootMargin: '-30% 0px -70% 0px' }
         );
         sections.forEach((section) => observer.observe(section));
         return () => sections.forEach((section) => observer.unobserve(section));
     }, []);
 
-    const toggleMenu = () => setIsMenuОpen(!isMenuOpen);
-    const closeMenu = () => setIsMenuОpen(false);
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const closeMenu = () => setIsMenuOpen(false);
 
-    // Убираем логику для isHeaderVisible из классов
     const headerClasses = `${styles.header} ${isScrolled ? styles.scrolled : ''}`;
+    
+    // Функция для проверки, активна ли ссылка
     const isLinkActive = (hash) => activeSection === hash;
 
     return (
@@ -54,12 +57,13 @@ const Header = ({ theme, toggleTheme }) => {
                         <ul className={styles.navList}>
                             {[
                                 { href: 'projects', text: 'Проекты' },
-                                { href: 'about', text: 'Обо мне' },
+                                // { href: 'about', text: 'Обо мне' },
                                 { href: 'contact', text: 'Контакты' },
                             ].map(link => (
                                 <li key={link.href}>
                                     <a 
                                         href={`#${link.href}`}
+                                        // Динамически добавляем класс 'active', если ссылка соответствует видимой секции
                                         className={isLinkActive(link.href) ? styles.active : ''}
                                         onClick={closeMenu}
                                     >

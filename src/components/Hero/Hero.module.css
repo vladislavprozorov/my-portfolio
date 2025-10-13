@@ -1,12 +1,14 @@
+/* Hero.module.css (С мобильной адаптацией) */
+
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative; 
     overflow: hidden;
-    background: var(--bg-color); 
-    /* НОВОЕ: Добавляем тонкий градиент на сам фон для глубины */
-    background-image: radial-gradient(ellipse at bottom, hsla(var(--primary-hue, 210), 30%, 20%, 0.3) 0%, transparent 70%);
+    background: transparent;
+    padding-bottom: 80px; 
+    box-sizing: border-box; /* Важно, чтобы padding включился в 100vh */
 }
 
 .heroLayout {
@@ -23,13 +25,12 @@
     z-index: 1;
 }
 
-/* --- Новая, чистая и контрастная типографика --- */
+/* --- Типографика --- */
 .heroTitle {
-    font-size: 5rem;
+    font-size: clamp(2.5rem, 8vw, 5rem); /* Адаптивный размер */
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 20px;
-    text-wrap: balance;
     color: var(--text-color);
 }
 
@@ -39,34 +40,39 @@
 
 .heroSubtitleAnimated {
     display: block;
-    font-size: 1.8rem;
+    font-size: clamp(1.2rem, 4vw, 1.8rem); /* Адаптивный размер */
     font-weight: 400;
     color: var(--text-color);
     opacity: 0.7;
     margin-bottom: 40px;
-    height: 30px;
+    min-height: 30px;
 }
 
 .heroSubtitle {
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem); /* Адаптивный размер */
     margin-bottom: 40px;
     opacity: 0.7;
     max-width: 500px;
 }
 
-/* --- Новые, стильные и минималистичные кнопки --- */
+/* --- Кнопки --- */
 .actionButtons {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
+.socialLinks {
+    display: flex;
+    gap: 15px;
+}
+
 .ctaButton {
-    /* Возвращаемся к нашему градиентному стилю, он будет отлично контрастировать */
     background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color));
     border: none;
     box-shadow: 0 4px 20px rgba(var(--primary-color-rgb, 94, 129, 172), 0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
 }
 
 .ctaButton:hover {
@@ -76,9 +82,9 @@
 
 .socialLink {
     color: var(--text-color);
-    font-size: 2.2rem;
+    font-size: 2rem;
     opacity: 0.6;
-    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .socialLink:hover {
@@ -87,55 +93,35 @@
     opacity: 1;
 }
 
-/* --- 3D Сцена --- */
-.heroScene {
-    width: 100%;
-    height: 600px;
-    cursor: grab;
-    position: relative;
-}
-.heroScene:active {
-    cursor: grabbing;
-}
-
-/* ... остальные стили (.scrollDown, .mouse, адаптивность) остаются без изменений ... */
-/* ... скопируй их из своей предыдущей рабочей версии ... */
-
-/* --- Правый визуальный блок --- */
+/* --- Визуальный блок --- */
 .heroVisual {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 1000px; /* Включаем 3D-перспективу для дочерних элементов */
+    perspective: 1000px;
 }
 
 .techCube {
-    width: 350px;
+    width: min(350px, 90vw); /* Ограничиваем ширину на мобилках */
     height: 350px;
     position: relative;
-    transform-style: preserve-3d; /* Важно для 3D-позиционирования иконок */
-    
-    /* Эффект Glassmorphism */
-    background: rgba(var(--card-bg-rgb), 0.1); /* Полупрозрачный фон */
+    transform-style: preserve-3d;
+    background: transparent;
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px); /* Для Safari */
+    -webkit-backdrop-filter: blur(12px);
     border-radius: 30px;
-    border: 1px solid rgba(var(--border-rgb), 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
 }
 
 .techIcon {
     position: absolute;
-    font-size: 4rem; /* Размер иконок */
-    color: var(--text-color);
+    font-size: clamp(2.5rem, 8vw, 4rem); /* Адаптивный размер иконок */
     opacity: 0.8;
-    
-    /* Анимация плавного "парения" */
     animation: floatAnimation 6s ease-in-out infinite alternate;
 }
 
-/* --- Анимация "парения" --- */
+/* Анимация остается той же */
 @keyframes floatAnimation {
     0% {
         transform: translateY(0px) rotate(0deg);
@@ -151,38 +137,216 @@
     }
 }
 
-/* --- Расположение каждой иконки внутри куба --- */
+/* Позиции иконок */
 .iconReact {
     top: 15%;
     left: 40%;
-    animation-delay: 0s; /* Начинается сразу */
-    color: #61DAFB; /* Цвет React */
+    animation-delay: 0s;
+    color: #61DAFB;
 }
 
 .iconNode {
     top: 65%;
     left: 60%;
-    animation-delay: -2s; /* Начинается с другой фазы анимации */
-    color: #8CC84B; /* Цвет Node.js */
+    animation-delay: -2s;
+    color: #8CC84B;
 }
 
 .iconJs {
     top: 30%;
     left: 10%;
     animation-delay: -4s;
-    color: #F7DF1E; /* Цвет JavaScript */
+    color: #F7DF1E;
 }
 
 .iconPostgres {
     top: 60%;
     left: 15%;
     animation-delay: -1s;
-    color: #336791; /* Цвет PostgreSQL */
+    color: #336791;
 }
 
 .iconDocker {
     top: 20%;
     left: 70%;
     animation-delay: -3s;
-    color: #2496ED; /* Цвет Docker */
+    color: #2496ED;
+}
+
+/* Scroll indicator */
+.scrollDown {
+    position: absolute;
+    bottom: 40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 5; /* Добавим z-index на всякий случай */
+}
+
+.scrollDown:hover {
+    opacity: 1;
+}
+
+.mouse {
+    width: 26px;
+    height: 40px;
+    border: 2px solid var(--text-color);
+    border-radius: 20px;
+    position: relative;
+}
+
+.mouse span {
+    display: block;
+    width: 4px;
+    height: 8px;
+    background: var(--text-color);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroll 2s infinite;
+}
+
+@keyframes scroll {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+
+/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+
+/* Планшеты */
+@media screen and (max-width: 768px) {
+    .heroLayout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .heroContent {
+        text-align: center;
+        order: 2; /* Текст идет вторым */
+    }
+    
+    .heroVisual {
+        order: 1; /* Иконки идут первыми */
+        margin-bottom: 20px;
+    }
+    
+    .heroSubtitle {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .techCube {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .actionButtons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .scrollDown {
+        display: none;
+    }
+}
+
+/* Мобильные телефоны */
+@media screen and (max-width: 480px) {
+    .hero {
+        padding: 20px 0;
+        min-height: 100svh; /* Используем svh для правильной высоты на мобилках */
+    }
+    
+    .heroTitle {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .heroSubtitleAnimated {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+    
+    .heroSubtitle {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+    
+    .techCube {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .techIcon {
+        font-size: 2.5rem;
+    }
+    
+    /* Перестраиваем позиции иконок для маленького куба */
+    .iconReact {
+        top: 35%;
+        left: 35%;
+    }
+    
+    .iconNode {
+        top: 55%;
+        left: 55%;
+    }
+    
+    .iconJs {
+        top: 20%;
+        left: 10%;
+    }
+    
+    .iconPostgres {
+        top: 60%;
+        left: 10%;
+    }
+    
+    .iconDocker {
+        top: 10%;
+        left: 60%;
+    }
+    
+    .actionButtons {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+    
+    .ctaButton {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .socialLinks {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .socialLink {
+        font-size: 1.8rem;
+    }
+
+}
+
+/* Совсем маленькие экраны */
+@media screen and (max-width: 360px) {
+    .techCube {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .techIcon {
+        font-size: 2rem;
+    }
 }

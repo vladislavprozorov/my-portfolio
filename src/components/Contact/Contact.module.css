@@ -1,29 +1,255 @@
+/* Contact.module.css (Мобильно-оптимизированная версия) */
+
 .contact {
     text-align: center;
+    padding: 100px 0;
+    background: transparent;
 }
 
 .contactText {
     max-width: 600px;
     margin: 0 auto 40px;
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 2.5vw, 1.1rem); /* Адаптивный размер */
+    line-height: 1.7;
     color: var(--text-color);
     opacity: 0.9;
 }
 
+/* Переносы строк */
+.breakLine {
+    display: inline;
+}
+
+/* Email кнопка */
+.emailButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color));
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(var(--primary-color-rgb), 0.3);
+}
+
+.emailButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(var(--primary-color-rgb), 0.4);
+}
+
+.emailIcon {
+    font-size: 1.2rem;
+}
+
+/* Социальные ссылки */
 .socialLinks {
-    margin-top: 40px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
-    gap: 25px; /* Увеличим расстояние для лучшего вида */
+    gap: 30px;
+    flex-wrap: wrap; /* Позволяем переносить на новую строку */
 }
 
-.socialLinks a {
+.socialLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
     color: var(--text-color);
-    font-size: 2.2rem; /* Немного увеличим иконки */
-    transition: color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    /* Минимальный размер для тач-целей */
+    min-width: 60px;
+    min-height: 60px;
 }
 
-.socialLinks a:hover {
+.socialLink:hover {
     color: var(--primary-color);
     transform: translateY(-5px);
+}
+
+.socialLink svg {
+    font-size: 2.5rem;
+}
+
+/* Подписи под иконками (скрыты на десктопе) */
+.socialLabel {
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.socialLink:hover .socialLabel {
+    opacity: 0.7;
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+
+/* Планшеты */
+@media screen and (max-width: 768px) {
+    .contact {
+        padding: 60px 20px;
+    }
+    
+    .contactText {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    
+    .emailButton {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+        padding: 14px 24px;
+    }
+    
+    .socialLinks {
+        margin-top: 40px;
+        gap: 25px;
+    }
+    
+    .socialLink svg {
+        font-size: 2.2rem;
+    }
+    
+    /* Показываем подписи на планшетах */
+    .socialLabel {
+        opacity: 0.7;
+    }
+}
+
+/* Мобильные телефоны */
+@media screen and (max-width: 480px) {
+    .contact {
+        padding: 40px 15px;
+    }
+    
+    .contactText {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+    
+    /* Убираем перенос строки на мобилках для лучшего flow текста */
+    .breakLine {
+        display: none;
+    }
+    
+    .emailButton {
+        width: 100%;
+        max-width: 280px;
+        padding: 14px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .emailButton span {
+        /* Обрезаем длинный email на очень маленьких экранах */
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .emailIcon {
+        font-size: 1.1rem;
+        flex-shrink: 0; /* Иконка не сжимается */
+    }
+    
+    .socialLinks {
+        margin-top: 35px;
+        gap: 20px;
+        /* На мобилках делаем 3 колонки */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .socialLink {
+        padding: 10px;
+        min-width: auto;
+        min-height: auto;
+    }
+    
+    .socialLink svg {
+        font-size: 2rem;
+    }
+    
+    /* Всегда показываем подписи на мобилках */
+    .socialLabel {
+        opacity: 0.6;
+        font-size: 0.7rem;
+    }
+}
+
+/* Очень маленькие экраны */
+@media screen and (max-width: 360px) {
+    .contact {
+        padding: 30px 10px;
+    }
+    
+    .contactText {
+        font-size: 0.875rem;
+    }
+    
+    .emailButton {
+        padding: 12px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .socialLinks {
+        gap: 15px;
+    }
+    
+    .socialLink svg {
+        font-size: 1.8rem;
+    }
+    
+    .socialLabel {
+        font-size: 0.65rem;
+    }
+}
+
+/* Горизонтальная ориентация на мобилках */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .contact {
+        padding: 30px 20px;
+    }
+    
+    .socialLinks {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .socialLabel {
+        display: none; /* Скрываем подписи в landscape */
+    }
+}
+
+/* Улучшенная доступность для тач-устройств */
+@media (hover: none) and (pointer: coarse) {
+    /* На тач-устройствах всегда показываем подписи */
+    .socialLabel {
+        opacity: 0.6;
+    }
+    
+    /* Увеличиваем область клика */
+    .socialLink {
+        padding: 15px;
+    }
+    
+    /* Убираем hover-эффекты */
+    .socialLink:hover {
+        transform: none;
+    }
+    
+    .emailButton:hover {
+        transform: none;
+    }
 }

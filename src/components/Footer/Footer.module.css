@@ -1,9 +1,50 @@
+/* Footer.module.css */
 .footer {
     text-align: center;
-    padding: 30px 0;
+    padding: 24px 0;
     border-top: 1px solid var(--border-color);
-    font-size: 0.9rem;
+    font-size: 0.875rem; /* 14px */
     color: var(--text-color);
     opacity: 0.7;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+    margin-top: auto; /* Обеспечивает прилипание футера к низу при использовании с flexbox */
+}
+
+.footer:hover {
+    opacity: 1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+}
+
+.text {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Оптимизация для мобильных устройств */
+@media (max-width: 768px) {
+    .footer {
+        padding: 20px 0;
+        font-size: 0.8rem; /* 12-13px на маленьких экранах */
+    }
+    
+    .container {
+        padding: 0 12px;
+    }
+}
+
+/* Дополнительная оптимизация для очень маленьких экранов */
+@media (max-width: 480px) {
+    .footer {
+        padding: 16px 0;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
 }

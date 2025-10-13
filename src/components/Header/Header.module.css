@@ -146,3 +146,40 @@
     .navList a { font-size: 1.5rem; }
     .burger { display: flex; }
 }
+.navList a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Псевдо-элемент для создания подчеркивания */
+.navList a::after {
+    content: '';
+    position: absolute;
+    width: 0; /* Изначально подчеркивание скрыто (нулевая ширина) */
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    transition: width 0.3s ease; /* Плавная анимация появления */
+}
+
+/* Показываем подчеркивание при наведении */
+.navList a:hover::after {
+    width: 100%;
+}
+
+/* --- ВАЖНЫЕ СТИЛИ ДЛЯ АКТИВНОЙ ССЫЛКИ --- */
+
+/* Меняем цвет текста у активной ссылки */
+.navList a.active {
+    color: var(--primary-color);
+}
+
+/* Показываем подчеркивание у активной ссылки (делаем его ширину 100%) */
+.navList a.active::after {
+    width: 100%;
+}

@@ -6,9 +6,9 @@ const Footer = () => {
 
     return (
         <footer className={styles.footer}>
-            <div className="container">
-                <p>
-                    © {currentYear} Иван Иванов. Сделано с ❤️ и кодом.
+            <div className={styles.container}>
+                <p className={styles.text}>
+                    © {currentYear} vladislavprozorov
                 </p>
             </div>
         </footer>

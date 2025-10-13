@@ -1,128 +1,341 @@
-/* --- Стили для всей секции --- */
+/* Projects.module.css (Мобильно-оптимизированная версия) */
+
 .projects {
-    position: relative; /* Нужно для псевдо-элемента фона */
-    overflow: hidden;
-    padding: 100px 0; /* Увеличим отступы */
+    position: relative;
+    padding: 100px 0;
+    background: transparent;
 }
 
-/* НОВОЕ: "Продолжение" фона из Hero-секции */
-.projects::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200%;
-    height: 100%;
-    /* background-image: radial-gradient(ellipse at top, hsla(var(--primary-hue, 210), 30%, 20%, 0.2) 0%, transparent 70%); */
-    z-index: -1;
-}
-
-/* --- Стили для сетки проектов --- */
 .projectsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Чуть увеличим мин. ширину */
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     gap: 40px;
 }
 
-/* --- "Стеклянные" карточки проектов --- */
+/* --- Карточка --- */
 .projectCard {
-    position: relative; /* Нужно для подсветки */
-    overflow: hidden; /* Важно для скругленных углов и подсветки */
-    border-radius: 16px; /* Более выраженные скругления */
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Эффект матового стекла */
-    background: rgba(var(--card-bg-rgb), 0.5); /* Полупрозрачный фон */
-    backdrop-filter: blur(10px); /* Размытие фона */
-    border: 1px solid rgba(var(--border-rgb), 0.2); /* Полупрозрачная рамка */
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* НОВОЕ: Анимированная градиентная подсветка при наведении */
-.projectCard::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 16px;
-    border: 2px solid transparent;
-    background: linear-gradient(120deg, transparent, var(--primary-color), transparent) border-box;
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) padding-box, 
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    /* Тонкое стекло */
+    background: rgba(var(--card-bg-rgb), 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(var(--border-rgb), 0.08);
 }
 
 .projectCard:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
 }
 
-.projectCard:hover::before {
-    opacity: 1;
+/* --- Изображение --- */
+.imageContainer {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
 }
-
-
-/* --- Внутреннее содержимое карточки (остается без глобальных изменений) --- */
-/* ... твои стили для .projectImage, .projectInfo, .projectTitle и т.д. ... */
-/* Пример стилей, если у тебя их нет: */
 
 .projectImage {
     width: 100%;
-    height: 220px;
+    height: 100%;
     object-fit: cover;
-    border-bottom: 1px solid rgba(var(--border-rgb), 0.1);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.projectInfo {
-    padding: 25px;
+.projectCard:hover .projectImage {
+    transform: scale(1.05);
+}
+
+/* Тонкий градиент поверх изображения для читаемости */
+.imageOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, 
+        rgba(var(--card-bg-rgb), 0.6) 0%, 
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* --- Контент --- */
+.projectContent {
+    padding: 28px;
 }
 
 .projectTitle {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: clamp(1.1rem, 3vw, 1.4rem); /* Адаптивный размер */
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-color);
+    letter-spacing: -0.02em;
 }
 
 .projectDescription {
+    font-size: clamp(0.875rem, 2vw, 0.95rem); /* Адаптивный размер */
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.7;
     margin-bottom: 20px;
-    min-height: 50px;
-    opacity: 0.8;
 }
 
+/* --- Минималистичные теги --- */
 .projectTags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 24px;
 }
 
-.projectTags span {
-    background-color: rgba(var(--primary-color-rgb), 0.1);
-    color: var(--primary-color);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+.tag {
+    padding: 6px 12px; /* Увеличил padding для лучшей тач-доступности */
+    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
     font-weight: 500;
+    color: var(--text-color);
+    background: transparent;
+    border: 1px solid rgba(var(--border-rgb), 0.15);
+    border-radius: 4px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
 }
 
-.projectLinks a {
+.projectCard:hover .tag {
+    opacity: 0.8;
+    border-color: rgba(var(--border-rgb), 0.25);
+}
+
+/* --- Чистые ссылки --- */
+.projectLinks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.primaryLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
     color: var(--text-color);
+    font-size: clamp(0.875rem, 2vw, 0.95rem);
     font-weight: 500;
-    margin-right: 20px;
-    transition: color 0.3s ease;
-    opacity: 0.7;
+    transition: gap 0.3s ease;
+    padding: 8px 0; /* Добавляем padding для лучшей кликабельности */
 }
-.projectLinks a:hover {
+
+.primaryLink:hover {
+    gap: 12px;
+}
+
+.arrow {
+    font-size: 0.85rem;
+    transition: transform 0.3s ease;
+}
+
+.primaryLink:hover .arrow {
+    transform: translateX(2px);
+}
+
+.secondaryLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px; /* Минимальный размер для тач-целей */
+    min-height: 44px;
+    border-radius: 8px;
+    color: var(--text-color);
+    background: transparent;
+    border: 1px solid rgba(var(--border-rgb), 0.1);
+    text-decoration: none;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.secondaryLink:hover {
+    opacity: 1;
+    background: rgba(var(--primary-color-rgb), 0.08);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
     color: var(--primary-color);
+}
+
+/* --- Тонкая подсветка при наведении --- */
+.projectCard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(var(--primary-color-rgb), 0.03) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.projectCard:hover::after {
     opacity: 1;
 }
-.projectLinks i {
-    vertical-align: middle;
+
+/* --- Едва заметная тень для глубины --- */
+.projectCard {
+    box-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.projectCard:hover {
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.05),
+        0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+
+/* Планшеты */
+@media screen and (max-width: 768px) {
+    .projects {
+        padding: 60px 0;
+    }
+    
+    .projectsGrid {
+        grid-template-columns: 1fr; /* Одна колонка на планшетах */
+        gap: 30px;
+    }
+    
+    .imageContainer {
+        height: 200px; /* Уменьшаем высоту изображения */
+    }
+    
+    .projectContent {
+        padding: 20px;
+    }
+    
+    /* На тач-устройствах всегда показываем hover-состояние для тегов */
+    .tag {
+        opacity: 0.8;
+        border-color: rgba(var(--border-rgb), 0.25);
+    }
+    
+    /* Убираем hover-эффекты на мобилках */
+    .projectCard:hover {
+        transform: none;
+        box-shadow: 
+            0 1px 2px rgba(0, 0, 0, 0.04),
+            0 4px 8px rgba(0, 0, 0, 0.04);
+    }
+    
+    .projectCard:hover .projectImage {
+        transform: none;
+    }
+    
+    .projectCard:hover::after {
+        opacity: 0;
+    }
+}
+
+/* Мобильные телефоны */
+@media screen and (max-width: 480px) {
+    .projects {
+        padding: 40px 0;
+    }
+    
+    .projectsGrid {
+        gap: 20px;
+        padding: 0 10px; /* Добавляем боковые отступы */
+    }
+    
+    .projectCard {
+        border-radius: 8px;
+    }
+    
+    .imageContainer {
+        height: 180px;
+    }
+    
+    .projectContent {
+        padding: 16px;
+    }
+    
+    .projectTitle {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    
+    .projectDescription {
+        font-size: 0.875rem;
+        margin-bottom: 16px;
+    }
+    
+    .projectTags {
+        gap: 6px;
+        margin-bottom: 20px;
+    }
+    
+    .tag {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+    
+    .projectLinks {
+        flex-direction: column; /* Ссылки в колонку на маленьких экранах */
+        gap: 12px;
+    }
+    
+    .primaryLink {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        background: rgba(var(--primary-color-rgb), 0.1);
+        border-radius: 6px;
+        border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+    }
+    
+    .secondaryLink {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+/* Очень маленькие экраны */
+@media screen and (max-width: 360px) {
+    .projectsGrid {
+        /* Уменьшаем минимальную ширину для очень маленьких экранов */
+        grid-template-columns: 1fr;
+    }
+    
+    .projectCard {
+        max-width: 100%;
+    }
+    
+    .imageContainer {
+        height: 160px;
+    }
+    
+    .projectTitle {
+        font-size: 1rem;
+    }
+    
+    .projectDescription {
+        font-size: 0.8rem;
+    }
+}
+
+/* Оптимизация для горизонтальной ориентации на мобилках */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .projects {
+        padding: 30px 0;
+    }
+    
+    .imageContainer {
+        height: 140px;
+    }
 }

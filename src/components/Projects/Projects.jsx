@@ -4,20 +4,20 @@ import styles from './Projects.module.css';
 // В реальном приложении эти данные могут приходить с API или из отдельного файла
 const projectsData = [
     {
-        title: "CRM-система для бизнеса",
-        description: "Платформа для управления клиентами, задачами и аналитикой. Разработан REST API и адаптивный UI.",
-        tags: ["React", "Node.js", "PostgreSQL"],
-        liveLink: "#",
-        githubLink: "#",
-        image: "https://via.placeholder.com/400x250/E8E9EB/2E3440?text=Project+1"
+        title: "Централизованная панель мониторинга криптовалют",
+        description: "Веб-приложение с функциональностью мониторинга и анализа криптовалют в реальном времени.",
+        tags: ["React", "TypeScript", "REST API", "MetaMask SDK"],
+        liveLink: "https://github.com/vladislavprozorov/crypto_dashboard",
+        githubLink: "https://github.com/vladislavprozorov/crypto_dashboard",
+        image: "https://lifespeaker.ru/wp-content/uploads/2021/12/kripta.jpg"
     },
     {
-        title: "Интернет-магазин 'Кофемания'",
+        title: "Платформа для обучения техническому английскому языку",
         description: "Сайт с каталогом товаров, корзиной и интеграцией с платежной системой.",
-        tags: ["Next.js", "TypeScript", "Stripe"],
-        liveLink: "#",
-        githubLink: "#",
-        image: "https://via.placeholder.com/400x250/E8E9EB/2E3440?text=Project+2"
+        tags: ["React", "TypeScript", "Node.js", "Express"],
+        liveLink: "https://github.com/vladislavprozorov/tech-english-platform",
+        githubLink: "https://github.com/vladislavprozorov/tech-english-platform",
+        image: "https://sun9-8.userapi.com/impg/kNWTbR98YfBs9c-ybRaFMzP2UBpe9sa3zzcvUw/4jPPl_-8N4U.jpg?size=807x536&quality=95&sign=d20588c3bf1c938979d29b27cd7b7df7&c_uniq_tag=EY8qM6FcMXyAXDQb72v_1279adPOwzuDWObgt8dyoFE&type=album"
     }
 ];
 

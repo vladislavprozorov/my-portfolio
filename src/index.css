@@ -1,31 +1,48 @@
 /* --- ОСНОВНЫЕ СТИЛИ И ПЕРЕМЕННЫЕ --- */
 :root {
-    /* ... твои старые переменные светлой темы ... */
+    /* Светлая тема */
     --bg-color: #f4f7f9;
     --text-color: #2e3440;
+    --card-bg-color: #ffffff;
+    --border-color: #e5e9f0;
+    --primary-color: #5e81ac;
+    --primary-hover-color: #81a1c1;
+    --header-bg: rgba(244, 247, 249, 0.8);
+    /* В :root (светлая тема) */
+    --primary-color-rgb: 94, 129, 172;
+    --card-bg-rgb: 255, 255, 255;
+    --border-rgb: 46, 52, 64;
+    --primary-color-rgb: 136, 192, 208;
     --primary-hue: 210; /* HSL оттенок для синего */
-    
-    /* НОВОЕ: Определяем глобальный градиент для СВЕТЛОЙ темы */
-    /* Он будет очень мягким, едва заметным, чтобы не мешать читаемости */
     --global-gradient: radial-gradient(
         ellipse at 50% 100%, 
-        hsla(var(--primary-hue), 30%, 85%, 0.5), /* Светлый, полупрозрачный оттенок */
+        hsla(var(--primary-hue), 30%, 85%, 0.5), /* Светлый оттенок */
         transparent 80%
     );
 }
 
+
+/* В html[data-theme="blue"] (темная тема) */
 html[data-theme="blue"] {
-    /* ... твои старые переменные темной темы ... */
-    --bg-color: #1a202c;
-    --text-color: #e5e9f0;
-    --primary-hue: 195; /* HSL оттенок для светло-голубого */
-    
-    /* НОВОЕ: Переопределяем градиент для ТЕМНОЙ темы (твой любимый) */
-    --global-gradient: radial-gradient(
+  /* ... твои переменные ... */
+  --primary-hue: 195; /* HSL оттенок для светло-голубого */
+  --global-gradient: radial-gradient(
         ellipse at 50% 100%, 
         hsla(var(--primary-hue), 30%, 15%, 0.4), /* Темный, глубокий оттенок */
         transparent 70%
     );
+}
+html[data-theme="blue"] {
+    /* Синяя (темная) тема */
+    --bg-color: #1a202c;
+    --text-color: #e5e9f0;
+    --card-bg-color: #2d3748;
+    --border-color: #4a5568;
+    --primary-color: #88c0d0;
+    --primary-hover-color: #a3daea;
+    --header-bg: rgba(26, 32, 44, 0.8);
+    --card-bg-rgb: 45, 55, 72;
+    --border-rgb: 229, 233, 240;
 }
 .global-background {
   position: fixed;
@@ -56,6 +73,12 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
+    /* --- ВОТ МАГИЯ --- */
+    /* 1. Мы накладываем два фона: наш градиент поверх сплошного цвета. */
+    background: var(--global-gradient), var(--bg-color);
+    
+    /* 2. "Пригвождаем" фон к экрану. Он больше не будет скроллиться. */
+    background-attachment: fixed;
 }
 
 .container {
