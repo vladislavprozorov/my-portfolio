@@ -14,6 +14,7 @@ const ParallaxIcon = ({ children, className, speed }) => {
 const Hero = ({ forwardedRef }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [isEffectsReady, setIsEffectsReady] = useState(false);
   const base = import.meta.env.BASE_URL;
   const cvpRef = useRef(null);
   const [cvpVisible, setCvpVisible] = useState(false);
@@ -31,15 +32,28 @@ const Hero = ({ forwardedRef }) => {
     if (motionQuery.addEventListener) motionQuery.addEventListener('change', motionHandler);
     else motionQuery.addListener(motionHandler);
 
+    // Отложенное включение интенсивных эффектов (parallax/float)
+    let idleTimer;
+    const enableEffects = () => setIsEffectsReady(true);
+    if (!reduceMotion) {
+      if ('requestIdleCallback' in window) {
+        // @ts-ignore
+        requestIdleCallback(enableEffects, { timeout: 1200 });
+      } else {
+        idleTimer = setTimeout(enableEffects, 600);
+      }
+    }
+
     return () => {
       window.removeEventListener('resize', checkMobile);
       if (motionQuery.removeEventListener) motionQuery.removeEventListener('change', motionHandler);
       else motionQuery.removeListener(motionHandler);
+      if (idleTimer) clearTimeout(idleTimer);
     };
   }, []);
 
-  const textParallax = useParallax({ speed: isMobile || reduceMotion ? 0 : -12 });
-  const haloParallax = useParallax({ speed: isMobile || reduceMotion ? 0 : -8 });
+  const textParallax = useParallax({ speed: isMobile || reduceMotion || !isEffectsReady ? 0 : -12 });
+  const haloParallax = useParallax({ speed: isMobile || reduceMotion || !isEffectsReady ? 0 : -8 });
 
   // Нативная анимация появления для CVP и KPI (без AOS)
   useEffect(() => {
@@ -154,7 +168,7 @@ const Hero = ({ forwardedRef }) => {
         </div>
       </div>
 
-      {!isMobile && !reduceMotion && (
+      {!isMobile && !reduceMotion && isEffectsReady && (
         <a href="#projects" className={styles.scrollDown} aria-hidden="false" aria-label="Прокрутить к проектам">
           <div className={styles.mouse}><span /></div>
         </a>

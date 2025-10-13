@@ -20,10 +20,33 @@
         transparent 80%
     );
 
-    /* Единые переменные для анимаций */
-    --reveal-duration: .45s;
+    /* 8pt grid — spacing scale */
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-32: 32px;
+
+    /* Радиусы */
+    --radius-8: 8px;
+    --radius-12: 12px;
+    --radius-16: 16px;
+
+    /* Тени — базовый набор */
+    --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.12);
+    --shadow-1-strong: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+    /* Анимации (reveal) */
+    --reveal-duration-above: 220ms; /* above-the-fold */
+    --reveal-duration-below: 320ms; /* ниже */
+    --reveal-duration: var(--reveal-duration-below);
     --reveal-stagger-step: 90ms;
     --reveal-distance: 10px;
+
+    /* Минимальный hit-area для интерактивов */
+    --hit-area-min: 44px;
 }
 
 
@@ -50,7 +73,9 @@ html[data-theme="blue"] {
     --border-rgb: 229, 233, 240;
 
     /* Можно при желании ускорить/замедлить анимации в теме */
-    --reveal-duration: .4s;
+    --reveal-duration-above: 200ms;
+    --reveal-duration-below: 300ms;
+    --reveal-duration: var(--reveal-duration-below);
 }
 .global-background {
   position: fixed;
@@ -95,7 +120,7 @@ body {
 .container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--space-20);
 }
 
 section {
@@ -112,13 +137,15 @@ section {
 /* Общие стили для кнопок, ссылок и т.д. можно оставить здесь */
 .cta-button {
     display: inline-block;
-    padding: 15px 30px;
+    padding: 12px 24px;
     background-color: var(--primary-color);
     color: var(--bg-color); /* Инвертированный цвет для контраста */
     text-decoration: none;
     font-weight: 700;
-    border-radius: 8px;
+    border-radius: var(--radius-12);
     transition: background-color 0.3s ease, transform 0.3s ease;
+    min-height: var(--hit-area-min);
+    line-height: 1;
 }
 
 .cta-button:hover {
@@ -220,4 +247,13 @@ a, button, .cta-button, [data-interactive] {
 
 @media (max-width: 480px) {
     html { scroll-padding-top: 70px; }
+}
+
+/* Mobile: делаем reveal быстрее, но не нарушаем prefers-reduced-motion */
+@media (max-width: 768px) {
+    :root {
+        --reveal-duration-above: 200ms;
+        --reveal-duration-below: 300ms;
+        --reveal-duration: var(--reveal-duration-below);
+    }
 }

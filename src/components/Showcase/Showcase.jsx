@@ -73,6 +73,7 @@ const projects = [
 const Showcase = ({ forwardedRef }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [isEffectsReady, setIsEffectsReady] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -85,15 +86,29 @@ const Showcase = ({ forwardedRef }) => {
     if (motionQuery.addEventListener) motionQuery.addEventListener('change', motionHandler);
     else motionQuery.addListener(motionHandler);
 
+    // Отложенное включение интенсивных эффектов (tilt/parallax)
+    let idleTimer;
+    const enableEffects = () => setIsEffectsReady(true);
+    if (!reduceMotion) {
+      // после первой тишины в 600мс включаем эффекты
+      if ('requestIdleCallback' in window) {
+        // @ts-ignore
+        requestIdleCallback(enableEffects, { timeout: 1200 });
+      } else {
+        idleTimer = setTimeout(enableEffects, 600);
+      }
+    }
+
     return () => {
       window.removeEventListener('resize', checkMobile);
       if (motionQuery.removeEventListener) motionQuery.removeEventListener('change', motionHandler);
       else motionQuery.removeListener(motionHandler);
+      if (idleTimer) clearTimeout(idleTimer);
     };
   }, []);
 
-  const headerParallax = useParallax({ speed: isMobile || reduceMotion ? 0 : -10 });
-  const haloParallax = useParallax({ speed: isMobile || reduceMotion ? 0 : -6 });
+  const headerParallax = useParallax({ speed: isMobile || reduceMotion || !isEffectsReady ? 0 : -10 });
+  const haloParallax = useParallax({ speed: isMobile || reduceMotion || !isEffectsReady ? 0 : -6 });
 
   const cards = useMemo(() => projects, []);
 
@@ -111,8 +126,8 @@ const Showcase = ({ forwardedRef }) => {
         {/* Featured Project — кейс‑стади с глубиной */}
         <FeaturedCase reduceMotion={reduceMotion} />
 
-        {/* Декоративные параллакс-иконки */}
-        {!reduceMotion && (
+  {/* Декоративные параллакс-иконки */}
+  {!reduceMotion && isEffectsReady && (
           <>
             <ParallaxIcon speed={8} className={styles.decorationOne}>
               <FaReact />
@@ -130,6 +145,7 @@ const Showcase = ({ forwardedRef }) => {
               proj={proj}
               index={i}
               reduceMotion={reduceMotion}
+              effectsReady={isEffectsReady}
             />
           ))}
         </div>
@@ -138,13 +154,13 @@ const Showcase = ({ forwardedRef }) => {
   );
 };
 
-const Card = ({ proj, index, reduceMotion }) => {
+const Card = ({ proj, index, reduceMotion, effectsReady }) => {
   const cardRef = useRef(null);
   const [mx, setMx] = useState(0);
   const [my, setMy] = useState(0);
 
   const onMouseMove = (e) => {
-    if (reduceMotion) return;
+    if (reduceMotion || !effectsReady) return;
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) return;
     const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -165,7 +181,7 @@ const Card = ({ proj, index, reduceMotion }) => {
       className={`${styles.card} ${styles.animated}`}
       style={{
         animationDelay: `${0.08 + index * 0.12}s`,
-        transform: reduceMotion
+        transform: reduceMotion || !effectsReady
           ? undefined
           : `perspective(1000px) rotateX(${-my * 6}deg) rotateY(${mx * 6}deg) translateZ(${Math.abs(mx) * 6}px)`,
       }}
@@ -192,7 +208,7 @@ const Card = ({ proj, index, reduceMotion }) => {
           href={proj.links.github}
           target="_blank"
           rel="noopener noreferrer"
-          className={`cta-button ${styles.ctaPrimary}`}
+          className={`${styles.ctaBase} ${styles.ctaPrimary}`}
           aria-label={`Открыть GitHub проекта ${proj.title}`}
         >
           <FaGithub />
@@ -202,7 +218,7 @@ const Card = ({ proj, index, reduceMotion }) => {
           href={proj.links.live}
           target="_blank"
           rel="noopener noreferrer"
-          className={`cta-button ${styles.ctaOutline}`}
+          className={`${styles.ctaBase} ${styles.ctaOutline}`}
           aria-label={`Посмотреть демо проекта ${proj.title}`}
         >
           <FaExternalLinkAlt />
@@ -283,10 +299,10 @@ const FeaturedCase = ({ reduceMotion }) => {
             </div>
           </dl>
           <div className={styles.caseActions}>
-            <a href={caseData.links.live} target="_blank" rel="noopener noreferrer" className={`cta-button ${styles.ctaPrimary}`} aria-label="Открыть демо кейса">
+            <a href={caseData.links.live} target="_blank" rel="noopener noreferrer" className={`${styles.ctaBase} ${styles.ctaPrimary}`} aria-label="Открыть демо кейса">
               <FaExternalLinkAlt /> <span>Демо / Репозиторий</span>
             </a>
-            <a href={caseData.links.github} target="_blank" rel="noopener noreferrer" className={`cta-button ${styles.ctaOutline}`} aria-label="Открыть GitHub кейса">
+            <a href={caseData.links.github} target="_blank" rel="noopener noreferrer" className={`${styles.ctaBase} ${styles.ctaOutline}`} aria-label="Открыть GitHub кейса">
               <FaGithub /> <span>Код</span>
             </a>
           </div>

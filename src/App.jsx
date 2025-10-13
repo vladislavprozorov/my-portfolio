@@ -1,8 +1,7 @@
 // src/App.jsx
 
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import { useInView } from 'react-intersection-observer';
 
 // --- КОД ПАСХАЛКИ ---
 import Confetti from 'react-confetti';
@@ -43,10 +42,7 @@ function App() {
   };
   // --------------------
 
-  const { ref: heroRef } = useInView({
-    threshold: 0.1,
-    triggerOnce: false,
-  });
+  const heroRef = useRef(null);
 
   useEffect(() => {
     const styles = [
@@ -57,7 +53,7 @@ function App() {
     console.log('%cПссс... На этом сайте есть пасхалка)', styles);
   }, []);
 
-  // AOS больше не используется: нативные reveal-анимации
+  
 
   useEffect(() => {
     if (hackerMode) {
