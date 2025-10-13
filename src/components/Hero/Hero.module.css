@@ -366,3 +366,42 @@
         font-size: 2rem;
     }
 }
+:global(html[data-theme="hacker"]) .techCube {
+  /* Добавляем четкую неоновую границу */
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
+
+  /* 
+    Создаем "туман" внутри. Этот градиент накладывается ПОВЕРХ 
+    прозрачного фона. Backdrop-filter будет размывать и "дождь",
+    и этот градиент, создавая красивый, глубокий эффект.
+  */
+  background-image: radial-gradient(
+    circle at center,
+    rgba(6, 22, 11, 0.6) 0%, /* Плотный центр */
+    rgba(6, 22, 11, 0.1) 70%  /* Прозрачные края */
+  );
+}
+
+/* БОНУС: Добавляем свечение иконкам в хакерской теме */
+:global(html[data-theme="hacker"]) .techIcon {
+  /* Используем фильтр, а не text-shadow, для лучшего эффекта на иконках */
+  filter: drop-shadow(0 0 5px rgba(var(--primary-color-rgb), 0.7));
+}
+
+
+/* 2. Темно-синяя (blue) тема */
+:global(html[data-theme="blue"]) .techCube {
+  /* Добавляем едва заметную рамку, чтобы очертить границы */
+  border-color: rgba(var(--primary-color-rgb), 0.3);
+
+  /* 
+    Добавляем градиент, используя цвета темы.
+    Это придает стеклу оттенок и объем.
+  */
+  background-image: radial-gradient(
+    circle at center,
+    rgba(var(--card-bg-rgb), 0.4) 0%,
+    transparent 75%
+  );
+}
