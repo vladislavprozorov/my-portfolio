@@ -10,6 +10,7 @@ import 'aos/dist/aos.css';
 import Confetti from 'react-confetti';
 import { useKonamiCode } from './hooks/useKonamiCode'; 
 import MatrixBackground from './components/MatrixBackground/MatrixBackground';
+import Showcase from './components/Showcase/Showcase';
 // --------------------
 
 // Компоненты
@@ -100,6 +101,7 @@ function App() {
           <Hero forwardedRef={heroRef} />
           <Suspense fallback={<div>Загрузка...</div>}>
             <About />
+            <Showcase />
             <Projects />
             <Contact />
           </Suspense>
