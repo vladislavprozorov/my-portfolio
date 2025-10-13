@@ -66,6 +66,8 @@ section {
 html {
     scroll-behavior: smooth;
     background-color: var(--bg-color); 
+    /* Учитываем фиксированную шапку при переходе к якорям */
+    scroll-padding-top: 90px;
 }
 
 body {
@@ -206,4 +208,8 @@ a, button, .cta-button, [data-interactive] {
     body, html, a, button {
         cursor: auto;
     }
+}
+
+@media (max-width: 480px) {
+    html { scroll-padding-top: 70px; }
 }

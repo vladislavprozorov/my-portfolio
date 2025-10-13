@@ -99,10 +99,20 @@ function App() {
         <Header theme={hackerMode ? 'hacker' : theme} toggleTheme={toggleTheme} />
         <main>
           <Hero forwardedRef={heroRef} />
-          <Suspense fallback={<div>Загрузка...</div>}>
+
+          <Suspense fallback={<section id="about" aria-busy="true" style={{minHeight: 480}} />}> 
             <About />
+          </Suspense>
+
+          <Suspense fallback={<section id="showcase" aria-busy="true" style={{minHeight: 480}} />}> 
             <Showcase />
+          </Suspense>
+
+          <Suspense fallback={<section id="projects" aria-busy="true" style={{minHeight: 480}} />}> 
             <Projects />
+          </Suspense>
+
+          <Suspense fallback={<section id="contact" aria-busy="true" style={{minHeight: 480}} />}> 
             <Contact />
           </Suspense>
         </main>
