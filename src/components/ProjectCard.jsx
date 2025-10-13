@@ -6,7 +6,6 @@ import styles from './Projects/Projects.module.css';
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
 
 const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, delay }) => {
-    const [isHovered, setIsHovered] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -27,8 +26,8 @@ const ProjectCard = ({ title, description, tags, liveLink, githubLink, image, de
             ref={reveal.ref}
             className={`${styles.projectCard} ${styles.reveal} ${reveal.visible ? styles.revealVisible : ''}`} 
             style={styleDelay}
-            onMouseEnter={() => !isMobile && setIsHovered(true)}
-            onMouseLeave={() => !isMobile && setIsHovered(false)}
+            onMouseEnter={undefined}
+            onMouseLeave={undefined}
         >
             {/* Изображение */}
             <div className={styles.imageContainer}>

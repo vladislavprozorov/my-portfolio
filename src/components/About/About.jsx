@@ -84,6 +84,15 @@ return (
             >
               Скачать резюме
             </a>
+            <a
+              href={`${base}CV-ATS.txt`}
+              className={styles.ctaGhost}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Открыть ATS-версию (TXT)"
+            >
+              ATS версия
+            </a>
             <a href="#contact" className={styles.ctaGhost} aria-label="Перейти к контактам">
               Связаться <FaArrowRight aria-hidden="true" />
             </a>

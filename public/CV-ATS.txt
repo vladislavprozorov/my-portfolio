@@ -1,0 +1,36 @@
+Name: Vladislav Prozorov
+Role: Frontend / Full-stack Engineer
+Location: Remote / GMT+3
+Email: skayterder@vk.com
+GitHub: https://github.com/vladislavprozorov
+Telegram: https://t.me/mscnever
+LinkedIn: https://linkedin.com/in/vladislavprozorov
+
+Summary:
+- React + TypeScript engineer focused on performance (LCP/INP), DX and clean architecture.
+- Deliver features 2–3x faster by improving tooling, component patterns and CI.
+- Experience with Next.js/SSR, Node.js (REST), PostgreSQL, and app-level optimizations.
+
+Skills:
+- Frontend: React, TypeScript, Next.js, Redux/RTK, CSS Modules, A11y
+- Backend: Node.js, Express, REST, PostgreSQL
+- Tooling: Vite, Webpack, ESLint, Prettier, GitHub Actions
+- Perf: Code splitting, lazy/Suspense, images, content-visibility, bundle trim
+
+Experience:
+- Frontend Engineer (2022–2025): Delivered multiple SPA/SSR apps; led performance improvements (-45% bundle, LCP < 2s);
+  migrated components to TS; introduced CI checks; collaborated with design and backend.
+
+Projects:
+- Crypto Dashboard: Real-time crypto analytics (React+TS); wallet integrations; charts; improved TTI by 1.2s.
+- Tech English Platform: Learning portal (React+Node); auth, course content; SSR experiment; -30% error rate.
+
+Education:
+- Self-education / courses; continuous learning in web performance and modern React.
+
+Languages:
+- Russian (native), English (intermediate/upper).
+
+Links:
+- Portfolio: https://vladislavprozorov.github.io/my-portfolio/
+- CV (PDF): See site header/About

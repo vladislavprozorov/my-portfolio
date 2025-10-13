@@ -2,8 +2,9 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import styles from './Showcase.module.css'
 import { useParallax } from 'react-scroll-parallax';
-import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaDocker, FaArrowDown } from 'react-icons/fa';
 import { SiTypescript, SiPostgresql } from 'react-icons/si';
+import { useReveal } from '../../hooks/useReveal';
 
 // Отображение иконок технологий на уровне модуля, чтобы использовать в Card
 const techIcon = (name) => {
@@ -106,6 +107,9 @@ const Showcase = ({ forwardedRef }) => {
             Подборка проектов с фокусом на производительность, DX и чистую архитектуру.
           </p>
         </header>
+
+        {/* Featured Project — кейс‑стади с глубиной */}
+        <FeaturedCase reduceMotion={reduceMotion} />
 
         {/* Декоративные параллакс-иконки */}
         {!reduceMotion && (
@@ -211,3 +215,141 @@ const Card = ({ proj, index, reduceMotion }) => {
 };
 
 export default Showcase;
+
+// --- FeaturedCase компонент ---
+const FeaturedCase = ({ reduceMotion }) => {
+  const caseReveal = useReveal({ disabled: reduceMotion });
+  const metricsReveal = useReveal({ disabled: reduceMotion });
+
+  // Пример реального кейса (можно заменить на ваш): Crypto Dashboard
+  const liveUrl = 'https://vladislavprozorov.github.io/crypto_dashboard/';
+  const caseData = {
+    title: 'Кейс: Crypto Dashboard',
+    problem: 'Нужно обеспечить стабильную работу real‑time дашбордов и плавный UX при обновлении данных.',
+    solution: 'Оптимизировал рендер и загрузку: вынес тяжёлые виджеты под lazy/Suspense, настроил code‑splitting, оптимизировал изображения и кэширование, добавил preconnect/preload.',
+    contribution: 'Спроектировал архитектуру компонентов, улучшил DX, внедрил базовые перф‑практики и подготовил проект к дальнейшим измерениям.',
+    links: {
+      live: liveUrl,
+      github: 'https://github.com/vladislavprozorov/crypto_dashboard',
+    },
+    // Метрики ещё не измерялись — оставим пустым, ниже покажем "Замерить сейчас"
+    results: [],
+    measureLinks: {
+      psi: `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(liveUrl)}`,
+      wpt: `https://www.webpagetest.org/?url=${encodeURIComponent(liveUrl)}`,
+      crux: `https://chromeuxreport.google/tools/compare?url=${encodeURIComponent(liveUrl)}`,
+    }
+  };
+
+  const improvePct = (b, a) => Math.round(((b - a) / b) * 100);
+  const sparkPoints = (before, after) => {
+    const max = Math.max(before, after);
+    const h = 28; // высота SVG
+    const pad = 4;
+    const scaleY = (v) => pad + (h - 2 * pad) * (1 - v / max); // меньше — выше
+    return {
+      x1: 4,
+      y1: scaleY(before),
+      x2: 116,
+      y2: scaleY(after)
+    };
+  };
+
+  return (
+    <section className={styles.featuredWrap} aria-label="Featured case: подробности кейса">
+      <div ref={caseReveal.ref} className={`${styles.featuredGrid} ${styles.reveal} ${caseReveal.visible ? styles.revealVisible : ''}`}>
+        <div className={styles.caseText}>
+          <div className={styles.caseEyebrow}>Featured Project</div>
+          <h3 className={styles.caseTitle}>{caseData.title}</h3>
+          <div className={styles.deltaChips}>
+            {caseData.results.map((m) => (
+              <span key={m.key} className={styles.deltaChip} aria-label={`Улучшение ${m.key} на ${improvePct(m.before, m.after)}%`}>
+                <FaArrowDown aria-hidden /> <b>{m.key}</b> −{improvePct(m.before, m.after)}%
+              </span>
+            ))}
+          </div>
+          <dl className={styles.caseList}>
+            <div>
+              <dt>Проблема</dt>
+              <dd>{caseData.problem}</dd>
+            </div>
+            <div>
+              <dt>Решение</dt>
+              <dd>{caseData.solution}</dd>
+            </div>
+            <div>
+              <dt>Личный вклад</dt>
+              <dd>{caseData.contribution}</dd>
+            </div>
+          </dl>
+          <div className={styles.caseActions}>
+            <a href={caseData.links.live} target="_blank" rel="noopener noreferrer" className={`cta-button ${styles.ctaPrimary}`} aria-label="Открыть демо кейса">
+              <FaExternalLinkAlt /> <span>Демо / Репозиторий</span>
+            </a>
+            <a href={caseData.links.github} target="_blank" rel="noopener noreferrer" className={`cta-button ${styles.ctaOutline}`} aria-label="Открыть GitHub кейса">
+              <FaGithub /> <span>Код</span>
+            </a>
+          </div>
+        </div>
+
+        <div ref={metricsReveal.ref} className={`${styles.caseMetrics} ${styles.reveal} ${metricsReveal.visible ? styles.revealVisible : ''}`} aria-label="Результаты: метрики до/после">
+          {caseData.results.length > 0 ? caseData.results.map((m, idx) => {
+            const max = m.before; // масштабируем относительно 'до'
+            const beforeW = 100;
+            const afterW = Math.max(5, (m.after / max) * 100);
+            const pct = improvePct(m.before, m.after);
+            const S = sparkPoints(m.before, m.after);
+            return (
+              <div key={m.key} className={styles.metricCard} style={{ transitionDelay: metricsReveal.visible ? `calc(var(--reveal-stagger-step) * ${idx})` : undefined }}>
+                <div className={styles.metricHeader}>
+                  <span className={styles.metricKey}>{m.key}</span>
+                  <span className={styles.metricDelta}>↓{pct}%</span>
+                </div>
+                <div className={styles.metricBars}>
+                  <div className={styles.barRow}>
+                    <span className={styles.barLabel}>До</span>
+                    <div className={styles.barTrack}>
+                      <div className={`${styles.barFill} ${styles.barBefore}`} style={{ width: `${beforeW}%` }} />
+                    </div>
+                    <span className={styles.barValue}>{m.before}{m.unit}</span>
+                  </div>
+                  <div className={styles.barRow}>
+                    <span className={styles.barLabel}>После</span>
+                    <div className={styles.barTrack}>
+                      <div className={`${styles.barFill} ${styles.barAfter}`} style={{ width: `${afterW}%` }} />
+                    </div>
+                    <span className={styles.barValue}>{m.after}{m.unit}</span>
+                  </div>
+                </div>
+                <div className={styles.sparkWrap} aria-hidden>
+                  <svg width="120" height="28" viewBox="0 0 120 28" className={styles.sparkline}>
+                    <defs>
+                      <linearGradient id="gradLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#ef4444"/>
+                        <stop offset="100%" stopColor="#22c55e"/>
+                      </linearGradient>
+                    </defs>
+                    <path d={`M ${S.x1} ${S.y1} L ${S.x2} ${S.y2}`} stroke="url(#gradLine)" strokeWidth="2" fill="none" />
+                    <circle cx={S.x1} cy={S.y1} r="3" fill="#ef4444" />
+                    <circle cx={S.x2} cy={S.y2} r="3" fill="#22c55e" />
+                  </svg>
+                </div>
+                <div className={styles.metricNote}>цель: ниже — лучше</div>
+              </div>
+            );
+          }) : (
+            <div className={styles.measurePanel}>
+              <div className={styles.measureTitle}>Метрики ещё не замерялись</div>
+              <p className={styles.measureText}>Открой для страницы живые отчёты и сохрани результаты в репозитории как часть кейса.</p>
+              <div className={styles.measureLinks}>
+                <a href={caseData.measureLinks.psi} target="_blank" rel="noopener noreferrer" className={styles.measureLink}>Lighthouse / PSI</a>
+                <a href={caseData.measureLinks.wpt} target="_blank" rel="noopener noreferrer" className={styles.measureLink}>WebPageTest</a>
+                <a href={caseData.measureLinks.crux} target="_blank" rel="noopener noreferrer" className={styles.measureLink}>CrUX</a>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};

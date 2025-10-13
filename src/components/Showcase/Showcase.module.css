@@ -72,6 +72,109 @@
   z-index: 1;
 }
 
+/* --- Featured case --- */
+.featuredWrap { margin: 18px 0 26px; }
+.featuredGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 26px;
+}
+.caseText {
+  background: linear-gradient(135deg, rgba(var(--card-bg-rgb), 0.85) 0%, rgba(var(--card-bg-rgb), 0.95) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(var(--primary-color-rgb), 0.15);
+  position: relative;
+}
+.caseText::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 18px;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb),0.18), transparent 45%);
+  opacity: .6;
+}
+.caseEyebrow { color: var(--primary-color); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.78rem; opacity: .9; }
+.caseTitle { margin: 8px 0 12px; font-size: clamp(1.2rem, 2.6vw, 1.6rem); letter-spacing: -0.01em; color: var(--text-color); }
+.caseList { display: grid; gap: 10px; }
+.caseList dt { font-weight: 700; color: var(--primary-color); margin-bottom: 2px; }
+.caseList dd { margin: 0; opacity: .95; }
+.caseActions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+
+.deltaChips { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.deltaChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,197,94, .35);
+  background: rgba(34,197,94, .12);
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.caseMetrics {
+  background: linear-gradient(135deg, rgba(var(--card-bg-rgb), 0.85) 0%, rgba(var(--card-bg-rgb), 0.95) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 18px;
+}
+.metricCard { background: rgba(var(--card-bg-rgb), 0.9); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; display: grid; gap: 10px; transition: transform .3s ease, box-shadow .3s ease; }
+.metricCard:hover { transform: translateY(-4px); box-shadow: 0 8px 26px rgba(var(--primary-color-rgb), .18); }
+.metricHeader { display: flex; justify-content: space-between; align-items: baseline; }
+.metricKey { font-weight: 700; color: var(--primary-color); }
+.metricDelta { color: #22c55e; font-weight: 700; }
+.metricBars { display: grid; gap: 10px; }
+.barRow { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; }
+.barLabel { opacity: .85; font-size: .9rem; }
+.barTrack { height: 8px; background: rgba(var(--border-rgb), 0.15); border-radius: 999px; overflow: hidden; }
+.barFill { height: 100%; border-radius: 999px; transition: width var(--reveal-duration) ease; }
+.barBefore { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+.barAfter { background: linear-gradient(90deg, #22c55e, #10b981); }
+.barValue { font-weight: 600; }
+.metricNote { opacity: .8; font-size: .85rem; }
+
+.sparkWrap { display: flex; justify-content: center; margin-top: 6px; }
+.sparkline { filter: drop-shadow(0 4px 18px rgba(var(--primary-color-rgb), .25)); }
+
+/* Панель для случая, когда метрики ещё не замерялись */
+.measurePanel {
+  margin-top: 10px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(var(--card-bg-rgb), 0.7) 0%, rgba(var(--card-bg-rgb), 0.9) 100%);
+  border: 1px dashed color-mix(in oklab, var(--border-color), transparent 35%);
+}
+.measureTitle { font-weight: 700; margin-bottom: 4px; }
+.measureText { opacity: .9; margin: 0 0 10px 0; }
+.measureLinks { display: flex; gap: 8px; flex-wrap: wrap; }
+.measureLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--border-color), transparent 30%);
+  background: rgba(var(--card-bg-rgb), 0.65);
+  color: inherit;
+  text-decoration: none;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.measureLink:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-color);
+  background: color-mix(in oklab, rgba(var(--card-bg-rgb), 0.65) 75%, var(--primary-color) 25%);
+}
+
+/* reveal на основе переменных */
+.reveal { opacity: 0; transform: translateY(var(--reveal-distance)); transition: opacity var(--reveal-duration) ease, transform var(--reveal-duration) ease; }
+.revealVisible { opacity: 1; transform: translateY(0); }
+
 .card {
   position: relative;
   background: linear-gradient(135deg, rgba(var(--card-bg-rgb), 0.85) 0%, rgba(var(--card-bg-rgb), 0.95) 100%);
@@ -149,12 +252,14 @@
 
 @media (max-width: 1024px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .featuredGrid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
   .showcase { padding: 60px 0 80px; }
   .grid { grid-template-columns: 1fr; gap: 16px; }
   .title { font-size: 1.6rem; }
+  .caseActions { flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {

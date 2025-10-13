@@ -42,7 +42,7 @@ function App() {
   };
   // --------------------
 
-  const { ref: heroRef, inView: isHeroVisible } = useInView({
+  const { ref: heroRef } = useInView({
     threshold: 0.1,
     triggerOnce: false,
   });

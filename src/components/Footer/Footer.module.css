@@ -24,6 +24,28 @@
     font-size: 0.875rem;
     opacity: 0.7;
 }
+.cvLinks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cvLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all .2s ease;
+}
+.cvLink:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: rgba(var(--primary-color-rgb), 0.1);
+}
 
 /* --- НОВЫЕ, ВИДИМЫЕ СТИЛИ ДЛЯ ПАСХАЛКИ --- */
 .easterEggHint {
@@ -62,6 +84,7 @@
     .text {
         font-size: 0.8rem;
     }
+  .cvLinks { order: 3; }
 }
 .easterEggHint {
   /* 1. Создаем Flex-контейнер для выравнивания */
