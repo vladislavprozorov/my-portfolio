@@ -6,8 +6,8 @@ import { useParallax } from 'react-scroll-parallax';
 import { FaGithub, FaLinkedin, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
 import { SiPostgresql, SiJavascript } from 'react-icons/si';
 
-const ParallaxIcon = ({ children, className, speed, isMobile }) => {
-  const parallax = useParallax({ speed: isMobile ? 0 : speed });
+const ParallaxIcon = ({ children, className, speed }) => {
+  const parallax = useParallax({ speed });
   return <div ref={parallax.ref} className={className}>{children}</div>;
 };
 

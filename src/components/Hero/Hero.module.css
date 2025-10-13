@@ -180,11 +180,21 @@
     .heroContent{text-align:center;order:2;}
     .heroVisual{order:1;margin-bottom:20px;}
     .techCube{width:250px;height:250px;}
-    .techIcon{animation:none;font-size:3rem;}
+     .techIcon{
+        animation: floatAnimation 6s ease-in-out infinite alternate;
+        font-size:3rem;
+    }
     .actionButtons{flex-direction:column;gap:12px;width:100%;}
     .ctaButton{width:100%;text-align:center;}
     .socialLinks{justify-content:center;width:100%;}
     .heroContent::before{left:-1.6rem;top:-0.8rem;width:calc(85% + 1rem);height:calc(100% + 1.6rem);filter:blur(12px);animation:none;}
+}
+@keyframes floatAnimationMobile {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
+    25% { transform: translateY(-8px) rotate(1deg); }
+    50% { transform: translateY(-16px) rotate(2deg); opacity: 0.95; }
+    75% { transform: translateY(-8px) rotate(1deg); }
+    100% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
 }
 
 @media screen and (max-width:480px){
@@ -300,17 +310,17 @@ html[data-theme="blue"] .heroSubtitleAnimated {
 .heroContent {
     padding: 20px 0;
 }
+
+
+
+:global(html[data-theme="blue"]) .techCube {
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    background-image: radial-gradient(circle at center, rgba(var(--card-bg-rgb), 0.4) 0%, transparent 75%);
+}
 @media screen and (max-width:768px){
-    .techIcon {
-        animation: floatAnimationMobile 6s ease-in-out infinite alternate;
-        font-size: 3rem;
-    }
+    .iconReact{ animation-delay:0s; }
+    .iconNode{ animation-delay:-2s; }
+    .iconJs{ animation-delay:-4s; }
+    .iconPostgres{ animation-delay:-1s; }
+    .iconDocker{ animation-delay:-3s; }
 }
-
-@keyframes floatAnimationMobile {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-    50% { transform: translateY(-10px) rotate(2deg); opacity: 0.95; }
-    100% { transform: translateY(0) rotate(-2deg); opacity: 0.8; }
-}
-
-
