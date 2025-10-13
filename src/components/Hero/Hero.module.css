@@ -269,3 +269,34 @@
 :root[data-theme="light"] .heroTitle span {
     color: hsl(var(--primary-hue), 60%, 55%);
 }
+html[data-theme="light"] .techCube {
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    background-image: radial-gradient(
+        circle at center, 
+        rgba(94, 129, 172, 0.15) 0%,  /* легкий синий оттенок */
+        rgba(var(--card-bg-rgb), 0.4) 40%,  /* переход к белому */
+        transparent 75%
+    );
+}
+
+html[data-theme="light"] .techCube::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    border-radius: 22px;
+    background: radial-gradient(
+        50% 50% at 50% 50%, 
+        rgba(94, 129, 172, 0.12) 0%,  /* легкая синяя подсветка */
+        transparent 80%
+    );
+    filter: blur(22px);
+    pointer-events: none;
+    z-index: -1;
+}
+html[data-theme="light"] .heroTitle span {
+    color: hsl(var(--primary-hue), 60%, 55%);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.12);
+}
