@@ -1,446 +1,316 @@
-/* Hero.module.css (С мобильной адаптацией) */
-
+/* Hero.module.css */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    position: relative; 
+    position: relative;
     overflow: hidden;
-    background: transparent;
-    padding-bottom: 80px; 
-    box-sizing: border-box; /* Важно, чтобы padding включился в 100vh */
+    padding-bottom: 80px;
+    box-sizing: border-box;
+    padding: 40px 0 80px; 
 }
 
 .heroLayout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); /* Даем тексту чуть больше места */
     align-items: center;
     gap: 60px;
     width: 100%;
+    position: relative;
 }
 
 .heroContent {
-    text-align: left;
     position: relative;
-    z-index: 1;
+    z-index: 3;
+    max-width: 720px;
+    text-align: left;
 }
 
-/* --- Типографика --- */
+/* Halo под текстом */
+.halo, .heroContent::before {
+    position: absolute;
+    left: -6rem;
+    top: -1.4rem;
+    width: calc(60% + 4rem);
+    height: calc(100% + 2.8rem);
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 22px;
+    background: radial-gradient(50% 80% at 25% 40%, rgba(255,255,255,0.12) 0%, rgba(0,0,0,0.18) 35%, rgba(0,0,0,0.08) 60%, transparent 85%);
+    filter: blur(20px);
+    transition: all 220ms ease;
+    animation: haloPulse 4s ease-in-out infinite;
+}
+
+@keyframes haloPulse {
+    0%,100%{opacity:1;transform:scale(1);}
+    50%{opacity:0.85;transform:scale(1.02);}
+}
+
+/* Заголовок */
 .heroTitle {
-    font-size: clamp(2.5rem, 8vw, 5rem); /* Адаптивный размер */
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 20px;
+    font-size: clamp(1.6rem,4.2vw,2.4rem);
+    font-weight: 700;
+    line-height: 1.03;
+    margin-bottom: 10px;
     color: var(--text-color);
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.38),0 10px 28px rgba(0,0,0,0.48);
 }
 
 .heroTitle span {
     color: var(--primary-color);
+    font-size: 0.98em;
+    font-weight: 700;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+.heroUSP {
+    font-weight: 600;
+    margin: 6px 0 12px;
+    color: var(--text-color);
+    line-height: 1.28;
+    font-size: clamp(0.95rem,2.1vw,1.02rem);
+    text-shadow: 0 6px 18px rgba(0,0,0,0.28);
 }
 
 .heroSubtitleAnimated {
     display: block;
-    font-size: clamp(1.2rem, 4vw, 1.8rem); /* Адаптивный размер */
-    font-weight: 400;
+    font-size: clamp(0.85rem,1.9vw,0.98rem);
+    font-weight: 500;
+    margin-bottom: 10px;
     color: var(--text-color);
-    opacity: 0.7;
-    margin-bottom: 40px;
-    min-height: 30px;
+    opacity: 0.85;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.3); /* лёгкая тень для читаемости на тёмной теме */
+    min-height: 26px;
 }
 
 .heroSubtitle {
-    font-size: clamp(0.95rem, 2.5vw, 1.1rem); /* Адаптивный размер */
-    margin-bottom: 40px;
-    opacity: 0.7;
-    max-width: 500px;
+    font-size: clamp(0.82rem,1.8vw,0.95rem);
+    margin-bottom: 12px;
+    color: var(--text-color);
+    line-height: 1.4;
+    opacity: 0.95;
 }
 
-/* --- Кнопки --- */
+/* Кнопки */
 .actionButtons {
     display: flex;
     align-items: center;
     gap: 20px;
-}
-
-.socialLinks {
-    display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .ctaButton {
-    background: linear-gradient(45deg, var(--primary-color), var(--primary-hover-color));
+    background: linear-gradient(45deg,var(--primary-color),var(--primary-hover-color));
     border: none;
-    box-shadow: 0 4px 20px rgba(var(--primary-color-rgb, 94, 129, 172), 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    white-space: nowrap;
+    padding: 12px 20px;
+    border-radius: 10px;
+    color: var(--bg-color);
+    font-weight: 700;
+    transition: transform .25s,box-shadow .25s;
+    position: relative;
+    z-index:3;
 }
-
 .ctaButton:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(var(--primary-color-rgb, 94, 129, 172), 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(var(--primary-color-rgb,94,129,172),0.45);
 }
 
+.ctaButtonOutline {
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:8px;
+    border:2px solid rgba(var(--primary-color-rgb,94,129,172),0.12);
+    font-weight:700;
+    color:var(--text-color);
+    background:transparent;
+    transition: transform .22s, box-shadow .22s;
+}
+.ctaButtonOutline:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.socialLinks {
+    display:flex;
+    gap:15px;
+}
 .socialLink {
     color: var(--text-color);
-    font-size: 2rem;
-    opacity: 0.6;
-    transition: all 0.3s ease;
+    font-size:1.6rem;
+    opacity:0.9;
+    transition: transform .18s, color .18s;
 }
+.socialLink:hover { color: var(--primary-color); transform: scale(1.08); opacity:1; }
 
-.socialLink:hover {
-    color: var(--primary-color);
-    transform: scale(1.15);
-    opacity: 1;
-}
-
-/* --- Визуальный блок --- */
-.heroVisual {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
-}
-
-.techCube {
-    width: min(350px, 90vw); /* Ограничиваем ширину на мобилках */
-    height: 350px;
-    position: relative;
-    transform-style: preserve-3d;
-  
-    
-   
-}
-
+/* Визуальный блок */
+.heroVisual { position: relative; display:flex; justify-content:center; align-items:center; perspective:1000px; z-index:3; }
+.techCube { width:min(350px,90vw); height:350px; position:relative; transform-style:preserve-3d; }
 .techIcon {
-    position: absolute;
-    font-size: clamp(2.5rem, 8vw, 4rem); /* Адаптивный размер иконок */
-    opacity: 0.8;
+    position:absolute;
+    font-size:clamp(2.5rem,8vw,4rem);
+    opacity:0.9;
     animation: floatAnimation 6s ease-in-out infinite alternate;
 }
 
-/* Анимация остается той же */
-@keyframes floatAnimation {
-    0% {
-        transform: translateY(0px) rotate(0deg);
-        opacity: 0.7;
-    }
-    50% {
-        transform: translateY(-20px) rotate(5deg);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(0px) rotate(-5deg);
-        opacity: 0.7;
-    }
+@keyframes floatAnimation{
+    0%{transform:translateY(0) rotate(0deg);opacity:0.75;}
+    50%{transform:translateY(-20px) rotate(5deg);opacity:0.95;}
+    100%{transform:translateY(0) rotate(-5deg);opacity:0.75;}
 }
 
-/* Позиции иконок */
-.iconReact {
-    top: 15%;
-    left: 40%;
-    animation-delay: 0s;
-    color: #61DAFB;
-}
-
-.iconNode {
-    top: 65%;
-    left: 60%;
-    animation-delay: -2s;
-    color: #8CC84B;
-}
-
-.iconJs {
-    top: 30%;
-    left: 10%;
-    animation-delay: -4s;
-    color: #F7DF1E;
-}
-
-.iconPostgres {
-    top: 60%;
-    left: 15%;
-    animation-delay: -1s;
-    color: #336791;
-}
-
-.iconDocker {
-    top: 20%;
-    left: 70%;
-    animation-delay: -3s;
-    color: #2496ED;
-}
+.iconReact{top:15%;left:40%;animation-delay:0s;color:#61DAFB;}
+.iconNode{top:65%;left:60%;animation-delay:-2s;color:#8CC84B;}
+.iconJs{top:30%;left:10%;animation-delay:-4s;color:#F7DF1E;}
+.iconPostgres{top:60%;left:15%;animation-delay:-1s;color:#336791;}
+.iconDocker{top:20%;left:70%;animation-delay:-3s;color:#2496ED;}
 
 /* Scroll indicator */
-.scrollDown {
-    position: absolute;
-    bottom: 40px; 
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-    z-index: 5; /* Добавим z-index на всякий случай */
+.scrollDown{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);opacity:.75;transition:opacity .3s;z-index:4;}
+.scrollDown:hover{opacity:1;}
+.mouse{width:26px;height:40px;border:2px solid var(--text-color);border-radius:20px;position:relative;}
+.mouse span{display:block;width:4px;height:8px;background:var(--text-color);border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:scroll 2s infinite;}
+@keyframes scroll{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(10px);}}
+
+/* Адаптация */
+@media screen and (max-width:768px){
+    .heroLayout{grid-template-columns:1fr;gap:20px;text-align:center;}
+    .heroContent{text-align:center;order:2;}
+    .heroVisual{order:1;margin-bottom:20px;}
+    .techCube{width:250px;height:250px;}
+    .techIcon{animation:none;font-size:3rem;}
+    .actionButtons{flex-direction:column;gap:12px;width:100%;}
+    .ctaButton{width:100%;text-align:center;}
+    .socialLinks{justify-content:center;width:100%;}
+    .heroContent::before{left:-1.6rem;top:-0.8rem;width:calc(85% + 1rem);height:calc(100% + 1.6rem);filter:blur(12px);animation:none;}
 }
 
-.scrollDown:hover {
-    opacity: 1;
+@media screen and (max-width:480px){
+    .hero{padding:20px 0;min-height:100svh;}
+    .heroTitle{font-size:1.45rem;}
+    .heroUSP{font-size:0.95rem;}
+    .heroSubtitleAnimated{font-size:1rem;margin-bottom:10px;}
+    .techCube{width:200px;height:200px;}
+    .techIcon{font-size:2.5rem;opacity:.95;}
+    .heroContent::before{display:none;}
 }
-
-.mouse {
-    width: 26px;
-    height: 40px;
-    border: 2px solid var(--text-color);
-    border-radius: 20px;
-    position: relative;
+@media (prefers-reduced-motion: reduce){
+    .techIcon{animation:none !important;}
+    .heroSubtitleAnimated{display:none;}
 }
-
-.mouse span {
-    display: block;
-    width: 4px;
-    height: 8px;
-    background: var(--text-color);
-    border-radius: 2px;
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: scroll 2s infinite;
+:root[data-theme="light"] .heroTitle span {
+  /* Освещаем основной синий, увеличивая яркость */
+  color: hsl(var(--primary-hue), 60%, 55%);
 }
-
-@keyframes scroll {
-    0% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(10px);
-    }
-}
-
-/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
-
-/* Планшеты */
 @media screen and (max-width: 768px) {
-    .heroLayout {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        text-align: center;
-    }
-    
-    .heroContent {
-        text-align: center;
-        order: 2; /* Текст идет вторым */
-    }
-    
-    .heroVisual {
-        order: 1; /* Иконки идут первыми */
-        margin-bottom: 20px;
-    }
-    
-    .heroSubtitle {
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .techCube {
-        width: 280px;
-        height: 280px;
-    }
-    
-    .actionButtons {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .scrollDown {
-        display: none;
-    }
+  .ctaButtonOutline {
+    width: 100%;
+    text-align: center;
+  }
+}
+html[data-theme="blue"] .heroSubtitleAnimated {
+  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  color: var(--text-color); /* светлый текст на тёмной теме */
 }
 
-/* Мобильные телефоны */
-@media screen and (max-width: 480px) {
-    .hero {
-        padding: 20px 0;
-        min-height: 100svh; /* Используем svh для правильной высоты на мобилках */
-    }
-    
-    .heroTitle {
-        font-size: 2rem;
-        margin-bottom: 15px;
-    }
-    
-    .heroSubtitleAnimated {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-    }
-    
-    .heroSubtitle {
-        font-size: 0.95rem;
-        margin-bottom: 30px;
-    }
-    
-    .techCube {
-        width: 200px;
-        height: 200px;
-    }
-    
-    .techIcon {
-        font-size: 2.5rem;
-    }
-    
-    /* Перестраиваем позиции иконок для маленького куба */
-    .iconReact {
-        top: 35%;
-        left: 35%;
-    }
-    
-    .iconNode {
-        top: 55%;
-        left: 55%;
-    }
-    
-    .iconJs {
-        top: 20%;
-        left: 10%;
-    }
-    
-    .iconPostgres {
-        top: 60%;
-        left: 10%;
-    }
-    
-    .iconDocker {
-        top: 10%;
-        left: 60%;
-    }
-    
-    .actionButtons {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-    }
-    
-    .ctaButton {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .socialLinks {
-        justify-content: center;
-        width: 100%;
-    }
-    
-    .socialLink {
-        font-size: 1.8rem;
-    }
-
+:root[data-theme="light"] .heroSubtitleAnimated {
+  text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  color: var(--text-color); /* тёмный текст на светлой теме */
 }
-:global(html[data-theme="hacker"]) .ctaButton {
-  /* 1. Задаем контрастный темный цвет для текста */
-  color: #0d1117; 
-
-  /* 2. Убираем градиент, оставляем чистый неоновый цвет */
-  background: var(--primary-color);
-  
-  /* 3. Убираем тень, чтобы текст был четче */
-  box-shadow: 0 4px 20px rgba(57, 255, 20, 0.4);
-}
-
-/* Эффект при наведении для хакерской темы */
-:global(html[data-theme="hacker"]) .ctaButton:hover {
-  color: #0d1117;
-  box-shadow: 0 8px 30px rgba(57, 255, 20, 0.5);
-}
-
-/* Совсем маленькие экраны */
-@media screen and (max-width: 360px) {
-    .techCube {
-        width: 160px;
-        height: 160px;
-    }
-    
-    .techIcon {
-        font-size: 2rem;
-    }
-}
-:global(html[data-theme="hacker"]) .techCube {
-  /* Добавляем четкую неоновую границу */
-  border: 1px solid var(--primary-color);
-  box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
-
-  /* 
-    Создаем "туман" внутри. Этот градиент накладывается ПОВЕРХ 
-    прозрачного фона. Backdrop-filter будет размывать и "дождь",
-    и этот градиент, создавая красивый, глубокий эффект.
-  */
-  background-image: radial-gradient(
-    circle at center,
-    rgba(6, 22, 11, 0.6) 0%, /* Плотный центр */
-    rgba(6, 22, 11, 0.1) 70%  /* Прозрачные края */
-  );
-}
-
-/* БОНУС: Добавляем свечение иконкам в хакерской теме */
-:global(html[data-theme="hacker"]) .techIcon {
-  /* Используем фильтр, а не text-shadow, для лучшего эффекта на иконках */
-  filter: drop-shadow(0 0 5px rgba(var(--primary-color-rgb), 0.7));
-}
-
-
-/* 2. Темно-синяя (blue) тема */
-:global(html[data-theme="blue"]) .techCube {
-  /* Добавляем едва заметную рамку, чтобы очертить границы */
-  border-color: rgba(var(--primary-color-rgb), 0.3);
-
-  /* 
-    Добавляем градиент, используя цвета темы.
-    Это придает стеклу оттенок и объем.
-  */
-  background-image: radial-gradient(
-    circle at center,
-    rgba(var(--card-bg-rgb), 0.4) 0%,
-    transparent 75%
-  );
-}
-:global(html[data-theme="hacker"]) .techCube {
-  /* 1. Возвращаем фон и размытие */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 30px;
-
-  /* 2. Добавляем четкую неоновую границу */
-  border: 1px solid var(--primary-color);
-  box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
-
-  /* 3. Создаем "туман" внутри */
-  background-image: radial-gradient(
-    circle at center,
-    rgba(6, 22, 11, 0.6) 0%,
-    rgba(6, 22, 11, 0.1) 70%
-  );
-}
-
-/* Добавляем свечение иконкам в хакерской теме */
-:global(html[data-theme="hacker"]) .techIcon {
-  filter: drop-shadow(0 0 5px rgba(var(--primary-color-rgb), 0.7));
-}
-.tiltWrapper {
-    /* Этот контейнер будет обрезан, чтобы скрыть "запас" */
+.heroContent {
     position: relative;
-    width: min(350px, 90vw);
-    height: min(350px, 90vw); /* Делаем его квадратным */
-    overflow: hidden; /* <-- САМОЕ ВАЖНОЕ: обрезаем все, что выходит за пределы */
-    border-radius: 30px; /* Скругляем углы так же, как у techCube */
+    z-index: 3;
+    max-width: 720px;
+    text-align: left;
+    padding: 1rem 0;          /* добавлен отступ сверху/снизу */
+    line-height: 1.5;          /* увеличен межстрочный интервал для воздуха */
 }
-.tiltComponent {
-    /* Делаем сам Tilt-компонент БОЛЬШЕ, чем его видимая область */
-    width: 120%;
-    height: 120%;
-    position: absolute;
-    top: -10%; /* Центрируем увеличенный блок */
-    left: -10%;
-    
-    /* Сохраняем transform-style, чтобы 3D-эффект работал */
-    transform-style: preserve-3d;
+
+.heroUSP {
+    font-weight: 600;
+    margin: 12px 0 20px;       /* увеличенные отступы сверху/снизу */
+    color: var(--text-color);
+    line-height: 1.45;         /* более просторный текст */
+    font-size: clamp(0.95rem,2.1vw,1.1rem);
+    text-shadow: 0 6px 18px rgba(0,0,0,0.28);
 }
+
+.heroSubtitleAnimated {
+    display: block;
+    font-size: clamp(0.85rem,1.9vw,1rem);
+    font-weight: 500;
+    margin-bottom: 18px;       /* увеличенный margin для «воздуха» */
+    color: var(--text-color);
+    opacity: 0.85;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    min-height: 26px;
+}
+
+.heroSubtitle {
+    font-size: clamp(0.82rem,1.8vw,1rem);
+    margin-bottom: 20px;        /* больше пространства перед кнопками */
+    color: var(--text-color);
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+/* Адаптивные отступы и выравнивание на мобильных */
+@media screen and (max-width:768px){
+    .heroLayout { grid-template-columns:1fr; gap:30px; text-align:center; }
+    .heroContent { text-align:center; order:2; padding:0 1rem; }
+    .heroVisual { order:1; margin-bottom:20px; }
+    .actionButtons { flex-direction: column; gap:16px; width:100%; }
+    .ctaButton, .ctaButtonOutline { width:100%; text-align:center; }
+}
+@media screen and (max-width:480px){
+    .hero { padding:40px 10px; min-height:100svh; }
+    .heroTitle { font-size:1.5rem; line-height:1.3; }
+    .heroUSP { font-size:1rem; margin-bottom:18px; }
+    .heroSubtitleAnimated { font-size:0.95rem; margin-bottom:16px; }
+    .heroSubtitle { font-size:0.95rem; margin-bottom:18px; }
+}
+@media screen and (max-width:768px){
+    .heroTitle {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        margin-bottom: 8px;
+    }
+    .heroTitle span {
+        font-size: 0.9em;
+        margin-left: 4px;
+    }
+    .heroUSP {
+        font-size: 0.85rem;
+        line-height: 1.3;
+        margin: 4px 0 8px;
+    }
+    .heroSubtitleAnimated {
+        font-size: 0.85rem;
+        line-height: 1.25;
+        min-height: 24px;
+    }
+    .heroSubtitle {
+        font-size: 0.82rem;
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+}
+.heroContent {
+    padding: 20px 0;
+}
+@media screen and (max-width:768px){
+    .techIcon {
+        animation: floatAnimationMobile 6s ease-in-out infinite alternate;
+        font-size: 3rem;
+    }
+}
+
+@keyframes floatAnimationMobile {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+    50% { transform: translateY(-10px) rotate(2deg); opacity: 0.95; }
+    100% { transform: translateY(0) rotate(-2deg); opacity: 0.8; }
+}
+
+
