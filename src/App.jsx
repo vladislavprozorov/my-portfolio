@@ -1,68 +1,115 @@
-// src/App.jsx (Супер-оптимизированная версия)
+// src/App.jsx
+
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import { useInView } from 'react-intersection-observer'; // <-- ИМПОРТИРУЕМ ХУК
+import { useInView } from 'react-intersection-observer';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
-// Компоненты, нужные сразу
+// --- КОД ПАСХАЛКИ ---
+import Confetti from 'react-confetti';
+import { useKonamiCode } from './hooks/useKonamiCode'; 
+import MatrixBackground from './components/MatrixBackground/MatrixBackground';
+// --------------------
+
+// Компоненты
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Footer from './components/Footer/Footer';
+import CustomCursor from './CustomCursor/CustomCursor';
 
-
-// НОВОЕ: Ленивая загрузка "тяжелых" компонентов
+// Ленивая загрузка
+const About = lazy(() => import('./components/About/About'));
 const Projects = lazy(() => import('./components/Projects/Projects'));
 const Contact = lazy(() => import('./components/Contact/Contact'));
 
-
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import About from './components/About/About';
-
 function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  
+  // --- КОД ПАСХАЛКИ ---
+  const [hackerMode, setHackerMode] = useState(false);
+  
+  const activateHackerMode = () => {
+    if (!hackerMode) {
+      console.log("EASTER EGG ACTIVATED!");
+      setHackerMode(true);
+    }
+  };
+  useKonamiCode(activateHackerMode);
 
-  // НОВОЕ: Хук для отслеживания видимости Hero
-  // `threshold: 0.1` означает, что событие сработает, когда хотя бы 10% Hero будет видно
+  // --- НОВАЯ ФУНКЦИЯ ДЛЯ ПЕРЕКЛЮЧЕНИЯ ПО КЛИКУ ---
+  const toggleHackerMode = () => {
+    setHackerMode(prevMode => !prevMode);
+  };
+  // --------------------
+
   const { ref: heroRef, inView: isHeroVisible } = useInView({
     threshold: 0.1,
-    triggerOnce: false, // Важно! Чтобы сцена снова включалась при возврате
+    triggerOnce: false,
   });
+
+  useEffect(() => {
+    const styles = [
+      'font-size: 14px', 'font-family: monospace', 'background: #0d1117',
+      'display: inline-block', 'color: #58a6ff', 'padding: 8px 12px',
+      'border: 1px solid #30363d', 'border-radius: 4px',
+    ].join(';');
+    console.log('%cПссс... На этом сайте есть пасхалка)', styles);
+  }, []);
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 50 });
   }, []);
 
   useEffect(() => {
+    if (hackerMode) {
+      document.documentElement.setAttribute('data-theme', 'hacker');
+      return; 
+    }
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-  }, [theme]);
+  }, [theme, hackerMode]);
 
   const toggleTheme = () => {
+    if (hackerMode) {
+      setHackerMode(false);
+    }
     setTheme((prevTheme) => (prevTheme === 'light' ? 'blue' : 'light'));
   };
 
   return (
     <ParallaxProvider>
-      {/* НОВОЕ: Контейнер для фона теперь не нужен, мы управляем рендером напрямую */}
-      {/* <div className="global-background"> ... </div> */}
+      <CustomCursor />
+      {hackerMode && (
+        <>
+        <MatrixBackground />
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          numberOfPieces={400}
+          gravity={0.1}
+          colors={['#32cd32', '#228B22', '#000000']}
+        />
+        </>
+      )}
 
       <div className="content-wrapper">
-        <Header theme={theme} toggleTheme={toggleTheme} />
+        <Header theme={hackerMode ? 'hacker' : theme} toggleTheme={toggleTheme} />
         <main>
-          {/* НОВОЕ: Передаем ref в Hero, чтобы отслеживать его появление */}
           <Hero forwardedRef={heroRef} />
-
-          {/* НОВОЕ: Оборачиваем ленивые компоненты в Suspense */}
-          <Suspense fallback={""}>
+          <Suspense fallback={<div>Загрузка...</div>}>
             <About />
             <Projects />
             <Contact />
           </Suspense>
         </main>
-        <Footer />
+        {/* --- ПЕРЕДАЕМ ПРОПСЫ В ФУТЕР --- */}
+        <Footer 
+          onHintClick={toggleHackerMode} 
+          isHackerModeActive={hackerMode} 
+        />
       </div>
-
-
     </ParallaxProvider>
   );
 }

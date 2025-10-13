@@ -1,50 +1,146 @@
-/* Footer.module.css */
+/* src/components/Footer/Footer.module.css */
+
 .footer {
-    text-align: center;
     padding: 24px 0;
     border-top: 1px solid var(--border-color);
-    font-size: 0.875rem; /* 14px */
     color: var(--text-color);
-    opacity: 0.7;
-    transition: border-color 0.3s ease, opacity 0.3s ease;
-    margin-top: auto; /* Обеспечивает прилипание футера к низу при использовании с flexbox */
-}
-
-.footer:hover {
-    opacity: 1;
+    transition: border-color 0.3s ease;
+    margin-top: auto;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1100px; /* Согласовываем с основным контейнером */
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 0 20px;
     width: 100%;
+    /* --- НОВЫЙ МАКЕТ --- */
+    display: flex;
+    justify-content: space-between; /* Разносим элементы по краям */
+    align-items: center; /* Выравниваем по центру */
 }
 
 .text {
     margin: 0;
-    line-height: 1.4;
+    font-size: 0.875rem;
+    opacity: 0.7;
 }
 
-/* Оптимизация для мобильных устройств */
+/* --- НОВЫЕ, ВИДИМЫЕ СТИЛИ ДЛЯ ПАСХАЛКИ --- */
+.easterEggHint {
+  color: var(--text-color);
+  opacity: 0.5;
+  font-size: 1.5rem; /* Делаем иконку крупнее */
+  cursor: pointer;   /* Показываем, что это кнопка */
+  transition: all 0.3s ease;
+  padding: 8px; /* Увеличиваем область клика */
+  border-radius: 50%;
+}
+
+.easterEggHint:hover {
+  color: var(--primary-color);
+  opacity: 1;
+  transform: scale(1.15) rotate(-15deg); /* Добавляем игривый эффект */
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+/* Стиль для активного режима */
+.easterEggHint.active {
+  color: var(--primary-color);
+  opacity: 1;
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.7); /* Эффект свечения */
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
-    .footer {
-        padding: 20px 0;
-        font-size: 0.8rem; /* 12-13px на маленьких экранах */
-    }
-    
     .container {
-        padding: 0 12px;
+        /* На мобильных ставим текст и иконку по центру */
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px; /* Отступ между текстом и иконкой */
+    }
+    .text {
+        font-size: 0.8rem;
     }
 }
+.easterEggHint {
+  /* 1. Создаем Flex-контейнер для выравнивания */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Расстояние между текстом и иконкой */
+  
+  /* 2. Стилизуем как "таблетку" */
+  background-color: rgba(var(--card-bg-rgb), 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 50px; /* Большой радиус для формы таблетки */
+  padding: 8px 16px;
+  
+  /* 3. Общие свойства */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none; /* Запрещаем выделение текста в кнопке */
+}
 
-/* Дополнительная оптимизация для очень маленьких экранов */
-@media (max-width: 480px) {
-    .footer {
-        padding: 16px 0;
-    }
-    
+.hintText {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+/* Выносим иконку из основного потока стилей, чтобы управлять ей отдельно */
+.easterEggHint svg {
+  color: var(--text-color);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+/* --- ЭФФЕКТЫ ПРИ НАВЕДЕНИИ --- */
+.easterEggHint:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+.easterEggHint:hover .hintText,
+.easterEggHint:hover svg {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+/* Анимация теперь только на иконке, это выглядит чище */
+.easterEggHint:hover svg {
+  transform: scale(1.2) rotate(-15deg);
+}
+
+/* --- СТИЛИ ДЛЯ АКТИВНОГО РЕЖИМА --- */
+.easterEggHint.active {
+  background-color: rgba(var(--primary-color-rgb), 0.15);
+  border-color: var(--primary-color);
+}
+
+.easterEggHint.active .hintText,
+.easterEggHint.active svg {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+.easterEggHint.active svg {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Анимация пульсации для активного режима */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+
+/* ... ваша адаптивность ... */
+@media (max-width: 768px) {
     .container {
-        padding: 0 10px;
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
     }
 }

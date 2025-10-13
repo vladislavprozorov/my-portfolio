@@ -154,3 +154,54 @@ section {
 .contact-section {
   background-color: var(--background-color-secondary); /* И этот тоже */
 }
+
+
+html[data-theme="hacker"] {
+    /* !!! ГЛАВНОЕ ИЗМЕНЕНИЕ: фон теперь прозрачный !!! */
+    --bg-color: transparent; 
+
+    --text-color: #32cd32; /* Ярко-зеленый текст */
+    --card-bg-color: rgba(6, 22, 11, 0.8);
+    --border-color: rgba(48, 54, 61, 0.7);
+    --primary-color: #39ff14; /* Неоново-зеленый */
+    --primary-hover-color: #adff2f; /* Зелено-желтый */
+    --header-bg: rgba(13, 17, 23, 0.8);
+    --primary-color-rgb: 57, 255, 20;
+    
+    /* Переопределяем шрифт на моноширинный */
+    font-family: 'Fira Code', 'Source Code Pro', monospace;
+
+    /* Добавляем эффект "матового стекла" для карточек, чтобы текст на них был читаемым */
+    --card-backdrop-filter: blur(5px);
+}
+
+/* Применяем backdrop-filter к карточкам в хакерской теме */
+html[data-theme="hacker"] .some-card-class { /* Замените на реальные классы ваших карточек, например, .skillCard */
+    backdrop-filter: var(--card-backdrop-filter);
+}
+
+/* Добавляем неоновое свечение заголовкам */
+html[data-theme="hacker"] .section-title,
+html[data-theme="hacker"] h3,
+html[data-theme="hacker"] .highlight {
+    color: var(--primary-color);
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.7);
+}
+
+/* Убираем глобальный градиент в хакерском режиме, он больше не нужен */
+html[data-theme="hacker"] body {
+    background: var(--bg-color);
+}
+/* В вашем главном CSS файле (например, index.css) */
+body, html {
+    cursor: none;
+}
+a, button, .cta-button, [data-interactive] {
+    cursor: none;
+}
+/* Отключаем на мобильных */
+@media (max-width: 768px) {
+    body, html, a, button {
+        cursor: auto;
+    }
+}
