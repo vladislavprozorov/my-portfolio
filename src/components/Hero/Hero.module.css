@@ -107,11 +107,9 @@
     height: 350px;
     position: relative;
     transform-style: preserve-3d;
-    background: transparent;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 30px;
-    border: 1px solid transparent;
+  
+    
+   
 }
 
 .techIcon {
@@ -404,4 +402,26 @@
     rgba(var(--card-bg-rgb), 0.4) 0%,
     transparent 75%
   );
+}
+:global(html[data-theme="hacker"]) .techCube {
+  /* 1. Возвращаем фон и размытие */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 30px;
+
+  /* 2. Добавляем четкую неоновую границу */
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
+
+  /* 3. Создаем "туман" внутри */
+  background-image: radial-gradient(
+    circle at center,
+    rgba(6, 22, 11, 0.6) 0%,
+    rgba(6, 22, 11, 0.1) 70%
+  );
+}
+
+/* Добавляем свечение иконкам в хакерской теме */
+:global(html[data-theme="hacker"]) .techIcon {
+  filter: drop-shadow(0 0 5px rgba(var(--primary-color-rgb), 0.7));
 }
