@@ -75,7 +75,7 @@ const Hero = ({ forwardedRef }) => {
 
           <div className={styles.actionButtons}>
             <a
-              href="/resume.pdf"
+              href="/my-portfolio/CV.pdf"
               className={`cta-button ${styles.ctaButton}`}
               target="_blank"
               rel="noopener noreferrer"
