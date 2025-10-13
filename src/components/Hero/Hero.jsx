@@ -43,7 +43,7 @@ const Hero = ({ forwardedRef }) => {
                 {/* Левая колонка с текстом */}
                 <div ref={textParallax.ref} className={styles.heroContent} data-aos="fade-right">
                     <h1 className={styles.heroTitle}>
-                        Привет, я <span>Влад</span> 👋
+                        Привет, я <span>Влад</span> ☕
                     </h1>
                     <TypeAnimation
                         sequence={[

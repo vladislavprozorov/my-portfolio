@@ -12,10 +12,11 @@ import Footer from './components/Footer/Footer';
 // НОВОЕ: Ленивая загрузка "тяжелых" компонентов
 const Projects = lazy(() => import('./components/Projects/Projects'));
 const Contact = lazy(() => import('./components/Contact/Contact'));
-const Scene3D = lazy(() => import('./components/Scene3D')); // 3D-сцену тоже делаем ленивой!
+
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import About from './components/About/About';
 
 function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
@@ -53,6 +54,7 @@ function App() {
 
           {/* НОВОЕ: Оборачиваем ленивые компоненты в Suspense */}
           <Suspense fallback={""}>
+            <About />
             <Projects />
             <Contact />
           </Suspense>

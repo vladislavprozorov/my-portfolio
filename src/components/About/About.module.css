@@ -1,0 +1,132 @@
+/* src/components/About/About.module.css */
+
+/* --- Анимация для рамки --- */
+@keyframes glowing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.aboutSection {
+  position: relative;
+  z-index: 2;
+  overflow: hidden; /* Чтобы свечение не выходило за пределы секции на мобилках */
+}
+
+.aboutContent {
+  display: flex;
+  align-items: center; /* Центрируем по вертикали */
+  gap: 60px;
+}
+
+/* --- Стили для фото и анимированной рамки --- */
+.imageWrapper {
+  flex-shrink: 0;
+}
+
+.glowWrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  padding: 5px; /* Отступ, чтобы свечение было видно */
+  overflow: hidden; /* Скрываем части псевдо-элемента, выходящие за круг */
+}
+
+.glowWrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%; /* Увеличиваем, чтобы градиент был плавным при вращении */
+  height: 200%;
+  z-index: 0;
+  background: conic-gradient(
+    var(--primary-color),
+    var(--primary-hover-color),
+    transparent 30%,
+    var(--primary-color)
+  );
+  animation: glowing 6s linear infinite;
+  transform-origin: center center;
+}
+
+.profileImage {
+  position: relative; /* Чтобы было над псевдо-элементом */
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--card-bg-color);
+  box-shadow: 0 5px 20px rgba(var(--border-rgb), 0.1);
+}
+
+/* --- Стили для текстового блока и навыков --- */
+.textWrapper {
+  flex: 1;
+}
+
+.bio {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.skillsTitle {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.skillsGrid {
+  display: grid;
+  /* Адаптивная сетка: минимум 120px, максимум - сколько влезет */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.skillCard {
+  background-color: rgba(var(--card-bg-rgb), 0.5); /* Полупрозрачный фон */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+  backdrop-filter: blur(5px); /* Эффект "матового стекла", если фон секции прозрачный */
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.skillCard:hover {
+  transform: translateY(-5px);
+  background-color: var(--card-bg-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.2);
+  color: var(--primary-color);
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 900px) {
+  .aboutContent {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+    .glowWrapper {
+        width: 220px;
+        height: 220px;
+    }
+    .bio {
+        font-size: 1rem;
+    }
+    .skillsGrid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+    }
+}
