@@ -7,6 +7,7 @@ import { useParallax } from 'react-scroll-parallax';
 import { FaGithub, FaLinkedin, FaReact, FaNodeJs, FaDocker } from 'react-icons/fa';
 import { SiPostgresql, SiJavascript } from 'react-icons/si';
 
+
 // Переиспользуемый компонент для параллакс-иконок
 const ParallaxIcon = ({ children, className, speed, isMobile }) => {
     // На мобилках отключаем параллакс для производительности

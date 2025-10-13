@@ -425,3 +425,22 @@
 :global(html[data-theme="hacker"]) .techIcon {
   filter: drop-shadow(0 0 5px rgba(var(--primary-color-rgb), 0.7));
 }
+.tiltWrapper {
+    /* Этот контейнер будет обрезан, чтобы скрыть "запас" */
+    position: relative;
+    width: min(350px, 90vw);
+    height: min(350px, 90vw); /* Делаем его квадратным */
+    overflow: hidden; /* <-- САМОЕ ВАЖНОЕ: обрезаем все, что выходит за пределы */
+    border-radius: 30px; /* Скругляем углы так же, как у techCube */
+}
+.tiltComponent {
+    /* Делаем сам Tilt-компонент БОЛЬШЕ, чем его видимая область */
+    width: 120%;
+    height: 120%;
+    position: absolute;
+    top: -10%; /* Центрируем увеличенный блок */
+    left: -10%;
+    
+    /* Сохраняем transform-style, чтобы 3D-эффект работал */
+    transform-style: preserve-3d;
+}
