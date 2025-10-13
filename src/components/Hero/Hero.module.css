@@ -300,3 +300,9 @@ html[data-theme="light"] .heroTitle span {
     color: hsl(var(--primary-hue), 60%, 55%);
     text-shadow: 0 1px 4px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.12);
 }
+html[data-theme="hacker"] .ctaButton {
+    color: #32ff32; /* ярко-зелёный */
+    background: none; /* если хочешь оставить “неоновый” стиль */
+    border: 2px solid #32ff32; /* если outline */
+    text-shadow: 0 0 6px #32ff32, 0 0 12px #32ff32;
+}
