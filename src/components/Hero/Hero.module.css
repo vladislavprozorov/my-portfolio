@@ -306,3 +306,8 @@ html[data-theme="hacker"] .ctaButton {
     border: 2px solid #32ff32; /* если outline */
     text-shadow: 0 0 6px #32ff32, 0 0 12px #32ff32;
 }
+@media screen and (max-width: 480px) {
+    .heroSubtitle {
+        display: none;
+    }
+}
