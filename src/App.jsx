@@ -4,10 +4,7 @@ import { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
 
 // --- КОД ПАСХАЛКИ ---
-import Confetti from 'react-confetti';
 import { useKonamiCode } from './hooks/useKonamiCode'; 
-import MatrixBackground from './components/MatrixBackground/MatrixBackground';
-import Showcase from './components/Showcase/Showcase';
 // --------------------
 
 // Компоненты
@@ -18,7 +15,10 @@ import CustomCursor from './CustomCursor/CustomCursor';
 import BackToTop from './components/BackToTop/BackToTop';
 
 // Ленивая загрузка
+const MatrixBackground = lazy(() => import('./components/MatrixBackground/MatrixBackground'));
+const ConfettiLazy = lazy(() => import('react-confetti'));
 const About = lazy(() => import('./components/About/About'));
+const Showcase = lazy(() => import('./components/Showcase/Showcase'));
 const Projects = lazy(() => import('./components/Projects/Projects'));
 const Contact = lazy(() => import('./components/Contact/Contact'));
 
@@ -74,19 +74,21 @@ function App() {
   return (
     <ParallaxProvider>
       <CustomCursor />
-      {hackerMode && (
-        <>
-        <MatrixBackground />
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
-          recycle={false}
-          numberOfPieces={400}
-          gravity={0.1}
-          colors={['#32cd32', '#228B22', '#000000']}
-        />
-        </>
-      )}
+      <Suspense fallback={null}>
+        {hackerMode && (
+          <>
+            <MatrixBackground />
+            <ConfettiLazy
+              width={window.innerWidth}
+              height={window.innerHeight}
+              recycle={false}
+              numberOfPieces={400}
+              gravity={0.1}
+              colors={['#32cd32', '#228B22', '#000000']}
+            />
+          </>
+        )}
+      </Suspense>
 
       <div className="content-wrapper">
         <Header theme={hackerMode ? 'hacker' : theme} toggleTheme={toggleTheme} />
